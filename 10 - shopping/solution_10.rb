@@ -8,7 +8,7 @@ class Shopping
     @shopping_total = 0.00
   end
   
-  def start
+  def get_user_input
     while true
       puts "Product Name:"
       product_name = gets.chomp.to_s
@@ -33,18 +33,31 @@ class Shopping
 
   # display final shopping summary
   def display_result
-    puts "\nShopping Summary:\n"
-    puts "-----------------\n"
     item_number = 1
+    print_header
     @items.each do | item_key, item_value |
-      puts "##{item_number} - #{item_key} Quantity: #{item_value["product_quantity"]}, Item Price: #{item_value["product_price"]}, Item Total Price: #{ (item_value["product_quantity"].to_f * item_value["product_price"].to_f).round(PRICE_ROUND_PRECISION) }\n"
+      print_item item_number, item_key, item_value
       item_number += 1
       @shopping_total += (item_value["product_quantity"] * item_value["product_price"])
     end
+    print_footer 
+  end
+
+  private
+  def print_header
+    puts "\nShopping Summary:\n"
+    puts "-----------------\n"
+  end
+
+  def print_item item_number, item_key, item_value
+    puts "##{item_number} - #{item_key} | Quantity: #{item_value["product_quantity"]} | Item Price: #{item_value["product_price"]} | Item Total Price: #{ (item_value["product_quantity"].to_f * item_value["product_price"].to_f).round(PRICE_ROUND_PRECISION) }\n"
+  end
+
+  def print_footer
     puts "-----------------\n"
     puts "Total Shopping Price: #{@shopping_total.round(PRICE_ROUND_PRECISION)}"
   end
 end
 
-shop = Shopping.new
-shop.start
+shopping = Shopping.new
+shopping.get_user_input
