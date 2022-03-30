@@ -35,10 +35,14 @@ class Shopping
   def display_result
     item_number = 1
     print_header
-    @items.each do | item_key, item_value |
-      print_item item_number, item_key, item_value
-      item_number += 1
-      @shopping_total += (item_value["product_quantity"] * item_value["product_price"])
+    if !@items.empty?
+      @items.each do | item_key, item_value |
+        print_item item_number, item_key, item_value
+        item_number += 1
+        @shopping_total += (item_value["product_quantity"] * item_value["product_price"])
+      end
+    else
+      puts "Shopping cart is empty!"
     end
     print_footer 
   end
