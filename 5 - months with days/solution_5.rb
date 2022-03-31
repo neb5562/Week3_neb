@@ -1,7 +1,7 @@
 require 'date'
 NEGATIVE_NUM = -1
 
-class Dote
+class NewDate
   def initialize(year)
     @year = year
     @months_with_days = generate_months_with_days_count
@@ -22,4 +22,4 @@ class Dote
 end
 
 # calculate for year of 2022 and months with 30 days
-puts Dote.new(2022).get_months_with_days(30)
+puts NewDate.new(2022).get_months_with_days(30)
