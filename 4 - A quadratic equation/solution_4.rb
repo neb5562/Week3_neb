@@ -10,7 +10,7 @@ class Quad
   end
 
   def get_discriminant
-    @second_coefficient * @second_coefficient - DISCRIMINANT_FORMULA_NUMBER * @first_coefficient * @third_coefficient
+    (@second_coefficient * @second_coefficient) - (DISCRIMINANT_FORMULA_NUMBER * @first_coefficient * @third_coefficient)
   end
 
   def find_elements
