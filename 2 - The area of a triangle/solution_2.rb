@@ -14,4 +14,4 @@ end
 
 
 triangle1 = Triangle.new(5, 3)
-puts triangle1.get_area
+puts triangle1.get_area_of_triangle
