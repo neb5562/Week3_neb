@@ -18,7 +18,11 @@ class Triangle
 
   # check if triangle is valid
   def is_triangle?
-    ((@first_side + @second_side) > @third_side && (@second_side + @third_side) > @first_side && (@third_side + @first_side) > @second_side)
+    first_check = (@first_side + @second_side) > @third_side
+    second_check = (@second_side + @third_side) > @first_side
+    thitd_check = (@third_side + @first_side) > @second_side
+    
+    (first_check && second_check && thitd_check)
   end
 
   # check if triangle is pythagorean && valid
