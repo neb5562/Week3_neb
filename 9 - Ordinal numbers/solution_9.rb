@@ -1,7 +1,7 @@
 require 'date'
 
 class OrdinalNum
-  def initialize year, month, day
+  def initialize(year, month, day)
     @year, @month, @day = year, month, day
   end
 
