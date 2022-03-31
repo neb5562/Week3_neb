@@ -32,7 +32,11 @@ class Triangle
 
   # check if triangle is isosceles && valid
   def is_isosceles?
-    @first_side == @second_side || @second_side == @third_side || @first_side == @third_side && is_triangle?
+    first_check = @first_side == @second_side
+    second_check = @second_side == @third_side
+    thitd_check = @first_side == @third_side
+    
+    first_check || second_check || thitd_check && is_triangle?
   end
 end
 
