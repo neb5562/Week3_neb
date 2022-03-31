@@ -14,7 +14,7 @@ class Shopping
       product_name = gets.chomp.to_s
 
       if product_name == "stop"
-        display_result
+        display_resultgit 
         break 
       end
       
