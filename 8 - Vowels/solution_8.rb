@@ -13,7 +13,7 @@ class Vowel
   end
 
   def get_vowels_hash
-    return @vowels_hash
+    @vowels_hash
   end
 end
 
