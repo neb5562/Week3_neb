@@ -18,7 +18,7 @@ class NewDate
   end
 
   # select months of year with 30 days or any value days variable gets.
-  def get_months_with_days days
+  def get_months_with_days(days)
     @months_with_days.select{ |_, days_in_month| days_in_month == days }
   end
 end
