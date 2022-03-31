@@ -1,9 +1,9 @@
 require 'date'
-NEGATIVE_NUM = -1
-FIRST_MONTH = 1
-LAST_MONTH = 12
 
 class NewDate
+  NEGATIVE_NUM = -1
+  FIRST_MONTH = 1
+  LAST_MONTH = 12
   def initialize(year)
     @year = year
     @months_with_days = generate_months_with_days_count
