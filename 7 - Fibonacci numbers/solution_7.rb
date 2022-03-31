@@ -18,7 +18,7 @@ class Fibonaci
   end
 
   def get_numbers 
-    return @numbers
+    @numbers
   end
 end
 
