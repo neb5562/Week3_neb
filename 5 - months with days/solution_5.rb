@@ -1,5 +1,7 @@
 require 'date'
 NEGATIVE_NUM = -1
+FIRST_MONTH = 1
+LAST_MONTH = 12
 
 class NewDate
   def initialize(year)
@@ -9,7 +11,7 @@ class NewDate
 
   def generate_months_with_days_count
     months_with_days = {}
-    (1..12).each do |i|
+    (FIRST_MONTH..LAST_MONTH).each do |i|
       months_with_days[Date::MONTHNAMES[i].to_s] = Date.new(@year, i, NEGATIVE_NUM).day
     end
     months_with_days
