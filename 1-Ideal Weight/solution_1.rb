@@ -1,14 +1,14 @@
-require './validation'
+require './validation/validation'
 FIXED_VALUE_TO_SUBSCRAPT = 110
 
 class Person
   def initialize(name, height)
     @validation = Validation.new
     @name = name
-    @validation.validate_presence_of(@name, "name")
+    @validation.validate_presence(@name, "name")
     @height = height
-    @validation.validate_presence_of(@height, "height")
-    @validation.validate_int(@height, "height")
+    @validation.validate_presence(@height, "height")
+    @validation.validate_type(@height, Integer, "height")
     @validation.check_all_validations
   end
   
