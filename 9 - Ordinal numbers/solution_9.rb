@@ -2,7 +2,8 @@ require 'date'
 
 class OrdinalNum
   def initialize(year, month, day)
-    @year, @month, @day = validate_int(year), validate_int(month), validate_int(day)
+    @year, @month, @day = year, month, day
+    validate_date(@year, @month, @day)
   end
 
   def get_ordinal_number
@@ -10,13 +11,12 @@ class OrdinalNum
   end
 
   private
-  def validate_int(value)
-    if value.to_s.match(/^\d+$/)
-      value.to_i
-    else
-      raise StandardError.new("#{value} must be Integer value!")
+  def validate_date(year, month, day)
+    if Date.valid_date?(year.to_i, month.to_i, day.to_i) == false
+      warn "#{year}-#{month}-#{day} Date is not valid!"
+      exit 1
     end
   end
 end
 
-puts OrdinalNum.new("1999", 3, 12).get_ordinal_number
+puts OrdinalNum.new(2020, 2, 29).get_ordinal_number
