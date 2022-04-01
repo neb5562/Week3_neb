@@ -1,44 +1,21 @@
+require './validation'
 FIXED_VALUE_TO_SUBSCRAPT = 110
 
 class Person
   def initialize(name, height)
-    @validations = []
+    @validation = Validation.new
     @name = name
-    validate_presence_of(@name, "name")
+    @validation.validate_presence_of(@name, "name")
     @height = height
-    validate_presence_of(@height, "height")
-    validate_int(@height)
-    check_all_validations
+    @validation.validate_presence_of(@height, "height")
+    @validation.validate_int(@height, "height")
+    @validation.check_all_validations
   end
   
   def get_ideal_weight
     @ideal_weight = @height.to_i - FIXED_VALUE_TO_SUBSCRAPT
     'Your weight is already optimal' if @ideal_weight.negative?
     "Name: #{@name}\nHeight: #{@height}\nIdeal weight: #{@ideal_weight}"
-  end
-
-  private
-  def validate_int(number)
-    if number.to_i.to_s != number
-      @validations.push("#{number.to_s + " "}must be integer!")
-    else
-      return number.to_i
-    end
-  end
-
-  def validate_presence_of(value, name)
-    if value.empty? == true
-      @validations.push("you must enter #{name}")
-    end
-  end
-
-  def check_all_validations
-    if @validations.empty? == false
-      @validations.each do |message|
-        puts message
-      end
-      exit 1
-    end
   end
 end
 
