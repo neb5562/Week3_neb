@@ -14,9 +14,10 @@ class OrdinalNum
     if value.to_s.match(/^\d+$/)
       value.to_i
     else
-      raise StandardError.new("#{value} must be Integer value!")
+      warn "#{value} must be Integer value!"
+      exit 1
     end
   end
 end
 
-puts OrdinalNum.new("1999", 3, 12).get_ordinal_number
+puts OrdinalNum.new("asd", 3, 12).get_ordinal_number
