@@ -10,7 +10,7 @@ class Validation
   end
 
   def validate_presence_of(value, name)
-    if value.empty? == true
+    if value.to_s.empty? == true
       @validations.push("you must enter #{name}!")
     end
   end
