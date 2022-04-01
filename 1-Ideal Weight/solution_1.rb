@@ -1,4 +1,4 @@
-require './Validation/validation'
+require '../Validation/validation'
 FIXED_VALUE_TO_SUBSCRAPT = 110
 
 class Person
