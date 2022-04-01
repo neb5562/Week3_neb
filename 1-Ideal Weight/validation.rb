@@ -6,14 +6,12 @@ class Validation
   def validate_int(number, name)
     if number.to_i.to_s != number
       @validations.push("#{name} must be integer!")
-    else
-      return number.to_i
     end
   end
 
   def validate_presence_of(value, name)
     if value.empty? == true
-      @validations.push("you must enter #{name}")
+      @validations.push("you must enter #{name}!")
     end
   end
 
