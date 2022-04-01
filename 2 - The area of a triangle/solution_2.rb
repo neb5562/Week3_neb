@@ -19,6 +19,9 @@ class Triangle
   end
 end
 
-
-triangle1 = Triangle.new("d", 3)
+puts "Please enter base of a triangle:"
+base = gets.chomp
+puts "Please enter height of a triangle:"
+height = gets.chomp
+triangle1 = Triangle.new(base, height)
 puts triangle1.get_area_of_triangle
