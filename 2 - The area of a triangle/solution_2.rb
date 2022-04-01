@@ -1,14 +1,14 @@
-require "./validation"
+require "../Validation/validation"
 TRIANGLE_AREA_ONE = 1
 TRIANGLE_AREA_TWO = 2
 
 class Triangle
   def initialize(base, height)
     @validation = Validation.new  
-    @validation.validate_presence_of(base, "base")
-    @validation.validate_float(base, "base")
-    @validation.validate_presence_of(height, "height")
-    @validation.validate_float(height, "height")
+    @validation.validate_presence(base, "base")
+    @validation.validate_type(base, Float, "base")
+    @validation.validate_presence(height, "height")
+    @validation.validate_type(height, Float, "height")
     @validation.check_all_validations
     @base = base.to_f
     @height = height.to_f
