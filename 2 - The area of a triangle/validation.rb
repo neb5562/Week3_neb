@@ -4,7 +4,7 @@ class Validation
   end
 
   def validate_float(number, name)
-    if number.to_f.to_s != number
+    if (number.is_a? Numeric) == false
       @validations.push("#{name} must be numeric!")
     end
   end
