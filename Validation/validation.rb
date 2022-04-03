@@ -11,6 +11,13 @@ class Validation
     @validations.push("you must enter #{name}!") if value.to_s.empty? 
   end
 
+  def validate_range(value, range_start, range_end)
+    first_check = value >= range_start
+    second_check = value <= range_end
+    @validations.push("#{value} must be greater or equal to #{range_start}!") if !first_check
+    @validations.push("#{value} must be less or equal to #{range_end}!") if !second_check
+  end
+
   def check_all_validations
     if @validations.empty? == false
       puts "\e[41mYou have validation errors!\e[0m"
