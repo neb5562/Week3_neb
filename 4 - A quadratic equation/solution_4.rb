@@ -1,8 +1,13 @@
+require "../Validation/validation"
 MULTIPLY_FIRST_COEFFICIENT = 2
 DISCRIMINANT_FORMULA_NUMBER = 4
 
 class Quad
   def initialize(first_coefficient, second_coefficient, third_coefficient)
+    @validation.validate_type(first_coefficient, Float, "first coefficient")
+    @validation.validate_type(second_coefficient, Float, "second coefficient")
+    @validation.validate_type(third_coefficient, Float, "third coefficient")
+    @validation.check_all_validations
     @first_coefficient = first_coefficient.to_f
     @second_coefficient = second_coefficient.to_f
     @third_coefficient = third_coefficient.to_f
@@ -36,4 +41,12 @@ class Quad
   end
 end
 
-Quad.new(1, -5, 6).find_elements
+# get data from input
+puts 'Please enter first coefficient:'
+first_coefficient = gets.chomp
+puts 'Please enter second coefficient:'
+second_coefficient = gets.chomp
+puts 'Please enter third coefficient:'
+third_coefficient = gets.chomp
+
+Quad.new(first_coefficient, second_coefficient, third_coefficient).find_elements
