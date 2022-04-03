@@ -5,6 +5,9 @@ DISCRIMINANT_FORMULA_NUMBER = 4
 class Quad
   def initialize(first_coefficient, second_coefficient, third_coefficient)
     @validation = Validation.new
+    @validation.validate_presence(first_coefficient, "first coefficient")
+    @validation.validate_presence(second_coefficient, "second coefficient")
+    @validation.validate_presence(third_coefficient, "third coefficient")
     @validation.validate_type(first_coefficient, Float, "first coefficient")
     @validation.validate_type(second_coefficient, Float, "second coefficient")
     @validation.validate_type(third_coefficient, Float, "third coefficient")
