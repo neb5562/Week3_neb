@@ -1,3 +1,4 @@
+require "../Validation/validation"
 PRICE_ROUND_PRECISION = 2
 
 class Shopping
@@ -6,6 +7,7 @@ class Shopping
     # @items stores all items user entered
     @items = {}
     @shopping_total = 0.00
+    @validation = Validation.new
   end
   
   def get_user_input
@@ -23,6 +25,15 @@ class Shopping
       puts "product Quantity:"
       product_quantity = gets.chomp.to_f
 
+      @validation.validate_presence(product_name, "year")
+      @validation.validate_presence(product_price, "month")
+      @validation.validate_presence(product_quantity, "day")
+      @validation.validate_type(product_price, Flaot, "month")
+      @validation.validate_type(product_quantity, Flaot, "day")
+      @validation.validate_range(product_quantity, "quantity", 1)
+      @validation.validate_positive(product_quantity, "quantity")
+      @validation.check_all_validations
+      
       store_item(product_name, product_price, product_quantity)
     end
   end
