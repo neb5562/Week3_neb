@@ -28,8 +28,8 @@ class Shopping
       @validation.validate_presence(product_name, "year")
       @validation.validate_presence(product_price, "month")
       @validation.validate_presence(product_quantity, "day")
-      @validation.validate_type(product_price, Flaot, "month")
-      @validation.validate_type(product_quantity, Flaot, "day")
+      @validation.validate_type(product_price, Float, "month")
+      @validation.validate_type(product_quantity, Float, "day")
       @validation.validate_range(product_quantity, "quantity", 1)
       @validation.validate_positive(product_quantity, "quantity")
       @validation.check_all_validations
