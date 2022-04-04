@@ -29,7 +29,7 @@ class Validation
   end
 
   def validate_date(year, month, day)
-    Date.valid_date?(year.to_i, month.to_i, day.to_i)
+    @validations.push("date must be valid!") unless Date.valid_date?(year.to_i, month.to_i, day.to_i)
   end
   
   def check_all_validations
