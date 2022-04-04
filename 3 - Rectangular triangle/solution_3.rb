@@ -8,6 +8,9 @@ class Triangle
     @validation.validate_type(first_side, Float, "first side")
     @validation.validate_type(second_side, Float, "second side")
     @validation.validate_type(third_side, Float, "third side")
+    @validation.validate_positive(first_side, "first side")
+    @validation.validate_positive(second_side, "second side")
+    @validation.validate_positive(third_side, "third side")
     @validation.check_all_validations
     @first_side, @second_side, @third_side = [first_side.to_f, second_side.to_f, third_side.to_f].sort!
   end
