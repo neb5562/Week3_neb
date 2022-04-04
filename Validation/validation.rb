@@ -27,6 +27,10 @@ class Validation
   def validate_negative(value, name)
     @validations.push("#{name} must be negative!") unless value.to_f.negative?
   end
+
+  def validate_date(year, month, day)
+    Date.valid_date?(year.to_i, month.to_i, day.to_i)
+  end
   
   def check_all_validations
     if @validations.empty? == false
