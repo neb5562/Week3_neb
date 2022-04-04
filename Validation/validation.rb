@@ -4,18 +4,20 @@ class Validation
   end
 
   def validate_type(value: value, type: type, name: name)
-    Class.send(type.to_s, value) rescue @validations.push("#{name} must be #{type}!")
+    Class.send(type.to_s, value)
+  rescue StandardError
+    @validations.push("#{name} must be #{type}!")
   end
 
   def validate_presence(value: value, name: name)
-    @validations.push("you must enter #{name}!") if value.to_s.empty? 
+    @validations.push("you must enter #{name}!") if value.to_s.empty?
   end
 
-  def validate_range(value: value, name: name, range_start: r_start = nil, range_end: r_end = nil)
+  def validate_range(value: value, name: name, range_start: nil, range_end: nil)
     first_check = range_start.nil? ? true : value >= range_start
     second_check = range_end.nil? ? true : value <= range_end
-    @validations.push("#{name} must be greater or equal to #{range_start}!") if !first_check
-    @validations.push("#{name} must be less or equal to #{range_end}!") if !second_check
+    @validations.push("#{name} must be greater or equal to #{range_start}!") unless first_check
+    @validations.push("#{name} must be less or equal to #{range_end}!") unless second_check
   end
 
   def check_all_validations
