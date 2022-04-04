@@ -5,10 +5,10 @@ class Person
   def initialize(name, height)
     @validation = Validation.new
     @name = name
-    @validation.validate_presence(@name, "name")
+    @validation.validate_presence(value: @name, name: "name")
     @height = height
-    @validation.validate_presence(@height, "height")
-    @validation.validate_type(@height, Integer, "height")
+    @validation.validate_presence(value: @height, name: "height")
+    @validation.validate_type(value: @height, type: Integer, name: "height")
     @validation.check_all_validations
   end
   
