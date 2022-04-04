@@ -5,7 +5,7 @@ class OrdinalNum
   def initialize(year, month, day)
     @validation = Validation.new
     @validation.validate_presence(year, "year")
-    @validation.validate_presence(month, "month"))
+    @validation.validate_presence(month, "month")
     @validation.validate_presence(day, "day")
     @validation.validate_type(year, Integer, "year")
     @validation.validate_type(month, Integer, "month")
