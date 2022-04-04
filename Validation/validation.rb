@@ -20,10 +20,14 @@ class Validation
     @validations.push("#{name} must be less or equal to #{range_end}!") unless second_check
   end
 
-  def validate_boolean(value, bool)
-    bool ? value.positive? : value.negative?
+  def validate_positive(value, name)
+    @validations.push("#{name} must be positive!") unless value.to_f.positive?
   end
 
+  def validate_negative(value, name)
+    @validations.push("#{name} must be negative!") unless value.to_f.negative?
+  end
+  
   def check_all_validations
     if @validations.empty? == false
       puts "\e[41mYou have validation errors!\e[0m"
