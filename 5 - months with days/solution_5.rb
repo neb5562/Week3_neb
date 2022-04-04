@@ -9,7 +9,7 @@ class NewDate
     @validation = Validation.new
     @validation.validate_presence(year, "year")
     @validation.validate_type(year, Integer, "year")
-    @validation.validate_range(year, 1, nil)
+    @validation.validate_range(year, "year" 1, nil)
     @validation.check_all_validations
     @year = year
     @months_with_days = generate_months_with_days_count
@@ -19,7 +19,7 @@ class NewDate
   def months_with_days(days)
     @validation.validate_presence(days, "day")
     @validation.validate_type(days, Integer, "day")
-    @validation.validate_range(days, 1, 31)
+    @validation.validate_range(days, "day" 1, 31)
     @validation.check_all_validations
     @months_with_days.select{ |_, days_in_month| days_in_month == days }
   end
@@ -34,5 +34,9 @@ class NewDate
   end
 end
 
+puts "please enter year:"
+year = gets.chomp
+puts "please enter number of days from 1 to 31:"
+days = gets.chomp
 # calculate for year of 2022 and months with 30 days
-puts NewDate.new(2022).months_with_days(30)
+puts NewDate.new(year).months_with_days(days)
