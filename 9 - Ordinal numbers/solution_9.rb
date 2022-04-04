@@ -1,22 +1,31 @@
+require "../Validation/validation"
 require 'date'
 
 class OrdinalNum
   def initialize(year, month, day)
+    @validation = Validation.new
+    @validation.validate_presence(year, "year")
+    @validation.validate_presence(month, "month"))
+    @validation.validate_presence(day, "day")
+    @validation.validate_type(year, Integer, "year")
+    @validation.validate_type(month, Integer, "month")
+    @validation.validate_type(day, Integer, "day")
+    @validation.validate_date(year, month, day)
+    @validation.check_all_validations
     @year, @month, @day = year, month, day
-    validate_date(@year, @month, @day)
   end
 
   def get_ordinal_number
-    "Day #{Date.new(@year, @month, @day).yday}."
+    "Day #{Date.new(@year.to_s, @month.to_s, @day.to_s).yday}."
   end
 
-  private
-  def validate_date(year, month, day)
-    if Date.valid_date?(year.to_i, month.to_i, day.to_i) == false
-      warn "#{year}-#{month}-#{day} Date is not valid!"
-      exit 1
-    end
-  end
 end
 
-puts OrdinalNum.new(2020, 2, 29).get_ordinal_number
+puts "please enter year:"
+year = gets.chomp
+puts "please enter month:"
+month = gets.chomp
+puts "please enter day:"
+day = gets.chomp
+
+puts OrdinalNum.new(year, month, day).get_ordinal_number
