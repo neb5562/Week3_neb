@@ -14,8 +14,8 @@ class Validation
   end
 
   def validate_range(value, name, range_start = nil, range_end = nil)
-    first_check = range_start.nil? ? true : value >= range_start
-    second_check = range_end.nil? ? true : value <= range_end
+    first_check = range_start.nil? ? true : value.to_f >= range_start.to_f
+    second_check = range_end.nil? ? true : value.to_f <= range_end.to_f
     @validations.push("#{name} must be greater or equal to #{range_start}!") unless first_check
     @validations.push("#{name} must be less or equal to #{range_end}!") unless second_check
   end
