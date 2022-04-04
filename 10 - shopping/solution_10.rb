@@ -25,12 +25,12 @@ class Shopping
       puts "product Quantity:"
       product_quantity = gets.chomp.to_f
 
-      @validation.validate_presence(product_name, "year")
-      @validation.validate_presence(product_price, "month")
-      @validation.validate_presence(product_quantity, "day")
-      @validation.validate_type(product_price, Float, "month")
-      @validation.validate_type(product_quantity, Float, "day")
-      @validation.validate_range(product_quantity, "quantity", 1)
+      @validation.validate_presence(product_name, "product name")
+      @validation.validate_presence(product_price, "product price")
+      @validation.validate_presence(product_quantity, "product quantity")
+      @validation.validate_type(product_price, Float, "product price")
+      @validation.validate_type(product_quantity, Float, "product quantity")
+      @validation.validate_range(product_quantity, "product quantity", 1)
       @validation.validate_positive(product_quantity, "quantity")
       @validation.check_all_validations
       
