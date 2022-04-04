@@ -11,7 +11,7 @@ class NewDate
     @validation.validate_type(year, Integer, "year")
     @validation.validate_range(year, "year", 1, nil)
     @validation.check_all_validations
-    @year = year
+    @year = year.to_i
     @months_with_days = generate_months_with_days_count
   end
 
@@ -21,7 +21,7 @@ class NewDate
     @validation.validate_type(days, Integer, "day")
     @validation.validate_range(days, "day", 1, 31)
     @validation.check_all_validations
-    @months_with_days.select{ |_, days_in_month| days_in_month == days }
+    @months_with_days.select{ |_, days_in_month| days_in_month == days.to_i }
   end
 
   private
