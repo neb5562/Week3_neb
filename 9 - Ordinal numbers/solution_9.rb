@@ -12,11 +12,11 @@ class OrdinalNum
     @validation.validate_type(day, Integer, "day")
     @validation.validate_date(year, month, day)
     @validation.check_all_validations
-    @year, @month, @day = year, month, day
+    @year, @month, @day = year.to_i, month.to_i, day.to_i
   end
 
   def get_ordinal_number
-    "Day #{Date.new(@year.to_s, @month.to_s, @day.to_s).yday}."
+    "Day #{Date.new(@year, @month, @day).yday}."
   end
 
 end
