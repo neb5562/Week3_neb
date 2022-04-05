@@ -1,7 +1,7 @@
-require '../Validation/validation'
-FIXED_VALUE_TO_SUBSCRAPT = 110
-
 class Person
+  require './validation'
+  FIXED_VALUE_TO_SUBSCRAPT = 110
+  
   def initialize(name, height)
     @validation = Validation.new
     @validation.validate_presence(name, "name")
