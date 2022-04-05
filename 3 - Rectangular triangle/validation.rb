@@ -1,46 +1,30 @@
-class Validation
-  def initialize
-    @validations = []
+module Validation
+  REGEX_VALIDATE_NUMBERS = /^-?(?!0\d)\d*(\.\d+)?$/
+
+  def self.validate_number(value, name)
+    raise AttributeError, "\e[31m#{name} must be number!\e[0m" unless value.match? (REGEX_VALIDATE_NUMBERS)
   end
 
-  def validate_type(value, type, name)
-    Class.send(type.to_s, value)
-  rescue StandardError
-    @validations.push("#{name} must be #{type}!")
+  def self.validate_presence(value, name)
+    raise AttributeError, "\e[31myou must enter #{name}!\e[0m" if value.to_s.empty?
   end
 
-  def validate_presence(value, name)
-    @validations.push("you must enter #{name}!") if value.to_s.empty?
-  end
-
-  def validate_range(value, name, range_start = nil, range_end = nil)
+  def self.validate_range(value, name, range_start = nil, range_end = nil)
     first_check = range_start.nil? ? true : value.to_f >= range_start.to_f
     second_check = range_end.nil? ? true : value.to_f <= range_end.to_f
-    @validations.push("#{name} must be greater or equal to #{range_start}!") unless first_check
-    @validations.push("#{name} must be less or equal to #{range_end}!") unless second_check
+    raise AttributeError, "\e[31m#{name} must be greater or equal to #{range_start}!\e[0m" unless first_check
+    raise AttributeError, "\e[31m#{name} must be less or equal to #{range_end}!\e[0m"  unless second_check
   end
 
-  def validate_positive(value, name)
-    @validations.push("#{name} must be positive!") unless value.to_f.positive?
+  def self.validate_positive(value, name)
+    raise AttributeError, "\e[31m#{name} must be positive!\e[0m" unless value.to_f.positive?
   end
 
-  def validate_negative(value, name)
-    @validations.push("#{name} must be negative!") unless value.to_f.negative?
+  def self.validate_negative(value, name)
+    raise AttributeError, "\e[31m#{name} must be negative!\e[0m" unless value.to_f.negative?
   end
 
   def validate_date(year, month, day)
-    @validations.push("date must be valid!") unless Date.valid_date?(year.to_i, month.to_i, day.to_i)
-  end
-  
-  def check_all_validations
-    if @validations.empty? == false
-      puts "\e[41mYou have validation errors!\e[0m"
-      @validations.each do |message|
-        puts "\e[31m#{message}\e[0m"
-      end
-      exit 1
-    end
+    raise AttributeError, "\e[31mdate must be valid!\e[0m" unless Date.valid_date?(year.to_i, month.to_i, day.to_i)
   end
 end
-
-
