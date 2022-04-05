@@ -1,3 +1,4 @@
+class AttributeError < StandardError; end
 class Person
   require './validation'
   FIXED_VALUE_TO_SUBSCRAPT = 110
@@ -6,9 +7,8 @@ class Person
     @validation = Validation.new
     @validation.validate_presence(name, "name")
     @validation.validate_presence(height, "height")
-    @validation.validate_type(height, Integer, "height")
+    @validation.validate_number(height, "height")
     @validation.validate_range(height, "height", 0)
-    @validation.check_all_validations
     @height = height
     @name = name
   end
