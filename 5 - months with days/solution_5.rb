@@ -40,3 +40,6 @@ puts "please enter number of days from 1 to 31:"
 days = gets.chomp
 # calculate for year of 2022 and months with 30 days
 puts NewDate.new(year).months_with_days(days)
+
+
+
