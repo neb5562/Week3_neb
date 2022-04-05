@@ -1,6 +1,6 @@
 class AttributeError < StandardError; end
+require "./validation"
 class Person
-  require "./validation"
   include Validation
   FIXED_VALUE_TO_SUBSCRAPT = 110
   
