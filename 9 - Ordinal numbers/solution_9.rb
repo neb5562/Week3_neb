@@ -19,4 +19,18 @@ class OrdinalNum
   end
 end
 
+<<<<<<< HEAD
 puts OrdinalNum.new(2020, 2, 29).get_ordinal_number
+=======
+puts "please enter year:"
+year = gets.chomp
+puts "please enter month:"
+month = gets.chomp
+puts "please enter day:"
+day = gets.chomp
+
+puts OrdinalNum.new(year, month, day).get_ordinal_number
+
+
+
+>>>>>>> task_9_ordinal_number_of_date
