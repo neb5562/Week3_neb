@@ -1,15 +1,16 @@
 class AttributeError < StandardError; end
 class Triangle
   require "./validation"
+  include Validation
+  
   TRIANGLE_AREA_ONE = 1
   TRIANGLE_AREA_TWO = 2
 
   def initialize(base, height)
-    @validation = Validation.new  
-    @validation.validate_presence(base, "base")
-    @validation.validate_number(base, "base")
-    @validation.validate_presence(height, "height")
-    @validation.validate_number(height, "height")
+    Validation.validate_presence(base, "base")
+    Validation.validate_number(base, "base")
+    Validation.validate_presence(height, "height")
+    Validation.validate_number(height, "height")
     @base = base
     @height = height
   end
