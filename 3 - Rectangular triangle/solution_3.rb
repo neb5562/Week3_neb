@@ -64,5 +64,3 @@ third_side = gets.chomp
 triangle1 = Triangle.new first_side, second_side, third_side
 triangle1.calculate_rectangular_triangle
 
-
-
