@@ -1,6 +1,6 @@
 class AttributeError < StandardError; end
+require "./validation"
 class Triangle
-  require "./validation"
   include Validation
   
   TRIANGLE_AREA_ONE = 1
