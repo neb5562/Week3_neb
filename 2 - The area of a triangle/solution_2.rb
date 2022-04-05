@@ -25,3 +25,6 @@ puts "Please enter height of a triangle:"
 height = gets.chomp
 triangle1 = Triangle.new(base, height)
 puts triangle1.get_area_of_triangle
+
+
+
