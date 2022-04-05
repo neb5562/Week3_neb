@@ -42,4 +42,3 @@ days = gets.chomp
 puts NewDate.new(year).months_with_days(days)
 
 
-
