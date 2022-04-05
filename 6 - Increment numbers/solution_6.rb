@@ -18,4 +18,3 @@ end
 
 puts IncNums.new.get_array
 
-
