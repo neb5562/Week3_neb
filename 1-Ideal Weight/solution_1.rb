@@ -1,14 +1,14 @@
 class AttributeError < StandardError; end
 class Person
-  require './validation'
+  require "./validation"
+  include Validation
   FIXED_VALUE_TO_SUBSCRAPT = 110
   
   def initialize(name, height)
-    @validation = Validation.new
-    @validation.validate_presence(name, "name")
-    @validation.validate_presence(height, "height")
-    @validation.validate_number(height, "height")
-    @validation.validate_range(height, "height", 0)
+    Validation.validate_presence(name, "name")
+    Validation.validate_presence(height, "height")
+    Validation.validate_number(height, "height")
+    Validation.validate_range(height, "height", 0)
     @height = height
     @name = name
   end
