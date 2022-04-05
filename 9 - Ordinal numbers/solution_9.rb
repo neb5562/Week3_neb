@@ -29,4 +29,3 @@ day = gets.chomp
 puts OrdinalNum.new(year, month, day).get_ordinal_number
 
 
-
