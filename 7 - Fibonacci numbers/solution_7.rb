@@ -25,4 +25,3 @@ end
 fib = Fibonaci.new
 puts fib.get_numbers
 
-
