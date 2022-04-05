@@ -17,3 +17,5 @@ class IncNums
 end
 
 puts IncNums.new.get_array
+
+
