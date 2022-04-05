@@ -1,6 +1,6 @@
 class AttributeError < StandardError; end
+require "./validation"
 class Triangle
-  require "./validation"
   include Validation
   def initialize(first_side, second_side, third_side)
     Validation.validate_presence(first_side, "first side")
