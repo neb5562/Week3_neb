@@ -14,6 +14,11 @@ class Triangle
     @height = height.to_f
   end
   
+  def call 
+    get_area_of_triangle
+  end
+
+  private
   def get_area_of_triangle
     @base * @height * TRIANGLE_AREA_ONE / TRIANGLE_AREA_TWO
   end
@@ -24,5 +29,5 @@ base = gets.chomp
 puts "Please enter height of a triangle:"
 height = gets.chomp
 triangle1 = Triangle.new(base, height)
-puts triangle1.get_area_of_triangle
+puts triangle1.call
 
