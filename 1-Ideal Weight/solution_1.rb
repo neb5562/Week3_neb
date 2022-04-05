@@ -28,6 +28,3 @@ height = gets.chomp
 
 person = Person.new name, height
 puts person.get_ideal_weight
-
-
-
