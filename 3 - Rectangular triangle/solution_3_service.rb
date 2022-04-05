@@ -1,6 +1,6 @@
 class Triangle
   require "./validation"
-
+  
   def initialize(first_side, second_side, third_side)
     @validation = Validation.new
     @validation.validate_presence(first_side, "first side")
@@ -16,6 +16,11 @@ class Triangle
     @first_side, @second_side, @third_side = [first_side.to_f, second_side.to_f, third_side.to_f].sort!
   end
 
+  def call 
+    calculate_rectangular_triangle
+  end
+
+  private
   def calculate_rectangular_triangle
     if is_pythagorean? && !is_isosceles?
       puts "Triangle is rectangular triangle.\n"
@@ -63,5 +68,5 @@ third_side = gets.chomp
 
 
 triangle1 = Triangle.new first_side, second_side, third_side
-triangle1.calculate_rectangular_triangle
+triangle1.call
 
