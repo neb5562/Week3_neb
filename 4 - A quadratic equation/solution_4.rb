@@ -54,5 +54,3 @@ puts 'Please enter third coefficient:'
 third_coefficient = gets.chomp
 
 Quad.new(first_coefficient, second_coefficient, third_coefficient).find_elements
-
-
