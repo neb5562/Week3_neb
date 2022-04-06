@@ -4,17 +4,15 @@ class WordsArray
   end
 
   def longest_word
-    @words_array.sort_by{ |word| word.length }.last
+    @words_array.max_by(&:length)
   end
 
   def words_symbol_count
-    @words_array.inject({}) do |hash, word|
+    @words_array.each_with_object({}) do |word, hash|
       hash[word] = word.to_s.length
-      hash
     end
   end
 end
-
 
 puts WordsArray.new(['Ruby', 'Python', 'Java', '.NET', 'HTML', 'JavaScript']).longest_word
 puts WordsArray.new(['Ruby', 'Python', 'Java', '.NET', 'HTML', 'JavaScript']).words_symbol_count
