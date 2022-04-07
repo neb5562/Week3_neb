@@ -2,6 +2,7 @@ class AttributeError < StandardError; end
 require './validation'
 class FindDuplicatesInArray
   include Validation
+  DUPLICATE_IF = 1
   def initialize(numbers)
     @numbers = numbers
   end
@@ -21,7 +22,7 @@ class FindDuplicatesInArray
   end
 
   def find_duplicates
-    @numbers.select{ |number| @numbers.count(number) > 1}.uniq
+    @numbers.select{ |number| @numbers.count(number) > DUPLICATE_IF }.uniq
   end
 end
 
