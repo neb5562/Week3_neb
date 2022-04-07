@@ -32,6 +32,6 @@ class NumberFactorial
   end
 end
 
-puts "please enter number to calculate factorial:"
+puts 'please enter number to calculate factorial:'
 number = gets.chomp
 print NumberFactorial.new(number).call
