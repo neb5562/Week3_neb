@@ -17,6 +17,7 @@ class FindDuplicatesInArray
   def validate_numbers 
     integer_lmbda = ->(value){ Validation.validate_with_lambda(value.to_i.to_s == value.to_s, "#{value} must be integer!")}
     @numbers.map(&integer_lmbda)
+    Validation.validate_with_lambda(!@numbers.empty?, "array must be not empty!")
   end
 
   def find_duplicates
