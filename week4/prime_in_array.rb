@@ -30,6 +30,7 @@ class PrimesArray
   end
 
   def prime?(number, current_divisor = 2)
+    return false if number.to_i < 2
     return true if number.to_i == 2
     return false if (number.to_i % current_divisor).zero?
     return true if (current_divisor * current_divisor) > number.to_i
