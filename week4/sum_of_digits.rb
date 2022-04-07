@@ -21,6 +21,7 @@ class DigitsSum
     Validation.validate_presence(@number_end, 'ending number')
     Validation.validate_with_lambda(@number_start.to_i.to_s == @number_start.to_s, "#{@number_start} must be integer!")
     Validation.validate_with_lambda(@number_end.to_i.to_s == @number_end.to_s, "#{@number_end} must be integer!")
+    Validation.validate_with_lambda(@number_start.to_i < @number_end.to_i, "first number must be greater than second one!")
   end
 
   def calculate_sum
