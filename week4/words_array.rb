@@ -1,4 +1,4 @@
-WORDS_ARRAY = %w['Ruby', 'Python', 'Java', '.NET', 'HTML', 'JavaScript'].freeze
+WORDS_ARRAY = %w[Ruby Python Java .NET HTML JavaScript].freeze
 class WordsArray
   def initialize(array)
     @words_array = array
