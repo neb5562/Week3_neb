@@ -18,7 +18,9 @@ class NumberFactorial
   private
 
   def validate_number
-    Validation.validate_positive(@number, 'number')
+    Validation.validate_with_lambda(@number.to_i.to_s == @number.to_s, "#{@number} must be integer!")
+    Validation.validate_with_lambda(@number.to_s != '0', "#{@number} must not be zero!")
+    Validation.validate_presence(@number, 'number')
   end
 
   def calculate_factorial
@@ -26,7 +28,7 @@ class NumberFactorial
   end
 
   def number_factorial_recursive(number)
-    return number if number == 1
+    return 1 if number == 0
 
     number * number_factorial_recursive(number - 1)
   end
