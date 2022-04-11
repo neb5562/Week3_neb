@@ -11,8 +11,8 @@ class RepDigit
   def call
     validate_digit
     repdigit?
-  rescue AttributeError => e
-    warn e
+  #rescue AttributeError => e
+   # warn e
   end
 
   private
