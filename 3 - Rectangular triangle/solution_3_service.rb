@@ -3,17 +3,27 @@ require "./validation"
 class Triangle
   include Validation
   def initialize(first_side, second_side, third_side)
-    Validation.validate_presence(first_side, "first side")
-    Validation.validate_presence(second_side, "second side")
-    Validation.validate_presence(third_side, "third side")
-    Validation.validate_number(first_side, Float, "first side")
-    Validation.validate_number(second_side, Float, "second side")
-    Validation.validate_number(third_side, Float, "third side")
-    Validation.validate_positive(first_side, "first side")
-    Validation.validate_positive(second_side, "second side")
-    Validation.validate_positive(third_side, "third side")
-    Validation.check_all_validations
     @first_side, @second_side, @third_side = [first_side, second_side, third_side].sort!
+  end
+
+  def call 
+    proceed_validations
+    calculate_rectangular_triangle
+  rescue AttributeError => e
+    warn e
+  end
+
+  private
+  def proceed_validations
+    Validation.validate_presence(@first_side, "first side")
+    Validation.validate_presence(@second_side, "second side")
+    Validation.validate_presence(@third_side, "third side")
+    Validation.validate_number(@first_side, "first side")
+    Validation.validate_number(@second_side, "second side")
+    Validation.validate_number(@third_side, "third side")
+    Validation.validate_positive(@first_side, "first side")
+    Validation.validate_positive(@second_side, "second side")
+    Validation.validate_positive(@third_side, "third side")
   end
 
   def calculate_rectangular_triangle
@@ -63,5 +73,5 @@ third_side = gets.chomp
 
 
 triangle1 = Triangle.new(first_side, second_side, third_side)
-triangle1.calculate_rectangular_triangle
+triangle1.call
 
