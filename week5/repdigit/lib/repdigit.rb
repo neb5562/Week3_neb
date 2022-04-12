@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-$LOAD_PATH << './lib'
+$LOAD_PATH << '../lib'
 
 class AttributeError < StandardError; end
 require 'validation'
