@@ -49,11 +49,11 @@ end
 
 #empty value or nil
 describe RepDigit do
-  it "raises AttributeError" do
+  it "returns false" do
     expect(RepDigit.new('').call).to be_falsey
   end
 
-  it "raises AttributeError" do
+  it "returns false" do
     expect(RepDigit.new(nil).call).to be_falsey
   end
 end
