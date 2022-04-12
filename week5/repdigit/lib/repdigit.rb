@@ -1,3 +1,6 @@
+#!/usr/bin/env ruby
+$LOAD_PATH << './lib'
+
 class AttributeError < StandardError; end
 require 'validation'
 
@@ -11,8 +14,9 @@ class RepDigit
   def call
     validate_digit
     repdigit?
-  #rescue AttributeError => e
-   # warn e
+  rescue AttributeError => e
+   warn e
+   return false
   end
 
   private
