@@ -30,7 +30,9 @@ STRING_LEN_TO = 30
 
     # will generate random numbers like 3333333, 555555555555555, 22222222. all msut be true
     it "returns true" do
-      expect(RepDigit.new(Faker::Number.within(range: NUMBER_CHAR_FROM..NUMBER_CHAR_TO).to_s * rand(SYMBOLS_NUMBER_FROM...SYMBOLS_NUMBER_TO).to_i).call).to be_truthy
+      symbol = Faker::Number.within(range: NUMBER_CHAR_FROM..NUMBER_CHAR_TO).to_s
+      number = rand(SYMBOLS_NUMBER_FROM...SYMBOLS_NUMBER_TO).to_i
+      expect(RepDigit.new(symbol * number).call).to be_truthy
     end
 
     # will generate non repdigit numbers, with helper
