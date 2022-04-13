@@ -23,7 +23,7 @@ STRING_LEN_TO = 30
 100.times do
   describe RepDigit do
 
-    # must raise AttributeError fo ar negative numbers as it will not pass validation
+    # must return false for negative numbers as it will not pass validation
     it "returns false" do
       expect(RepDigit.new(Faker::Number.negative).call).to be_falsey
     end
