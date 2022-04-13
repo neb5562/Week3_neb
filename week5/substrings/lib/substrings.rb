@@ -5,6 +5,7 @@ class AttributeError < StandardError; end
 require 'validation'
 
 class SubStrings
+  EMPTY_ARRAY_MESSAGE = 'words array must not be empty!'.freeze
   include Validation
   def initialize(sentence, words = [])
     @sentence   = sentence
@@ -23,8 +24,7 @@ class SubStrings
 
   def validate
     Validation.validate_presence(@sentence, 'sentence')
-    empty_array_message = 'words array must not be empty!'
-    Validation.validate_with_lambda(@words.empty? == false, empty_array_message)
+    Validation.validate_with_lambda(@words.empty? == false, EMPTY_ARRAY_MESSAGE)
   end
 
   def substrings
