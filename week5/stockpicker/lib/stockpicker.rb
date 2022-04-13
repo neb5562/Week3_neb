@@ -6,8 +6,8 @@ require 'validation'
 
 class StockPicker
   ARRAY_MIN_SIZE      = 2
-  EMPTY_ARRAY_MESSAGE = 'array must be not empty'
-  ARRAY_SIZE_MESSAGE  = 'array size must be over 1'
+  EMPTY_ARRAY_MESSAGE = 'array must be not empty'.freeze
+  ARRAY_SIZE_MESSAGE  = 'array size must be over 1'.freeze
   include Validation
 
   def initialize(array)
