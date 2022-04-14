@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 module Validation
-  REGEX_VALIDATE_NUMBERS = /^-?(?!0\d)\d*(\.\d+)?$/
-  REGEX_NATURAL_NUMBERS = /^\d+$/
+  REGEX_VALIDATE_NUMBERS = /^-?(?!0\d)\d*(\.\d+)?$/.freeze
+  REGEX_NATURAL_NUMBERS = /^\d+$/.freeze
 
   def self.validate_number(value, name)
-    raise AttributeError, "\e[31m#{name} must be number!\e[0m" unless value.match? (REGEX_VALIDATE_NUMBERS)
+    raise AttributeError, "\e[31m#{name} must be number!\e[0m" unless value.match?(REGEX_VALIDATE_NUMBERS)
   end
 
   def self.validate_presence(value, name)
@@ -14,7 +16,7 @@ module Validation
     first_check = range_start.nil? ? true : value.to_f >= range_start.to_f
     second_check = range_end.nil? ? true : value.to_f <= range_end.to_f
     raise AttributeError, "\e[31m#{name} must be greater or equal to #{range_start}!\e[0m" unless first_check
-    raise AttributeError, "\e[31m#{name} must be less or equal to #{range_end}!\e[0m"  unless second_check
+    raise AttributeError, "\e[31m#{name} must be less or equal to #{range_end}!\e[0m" unless second_check
   end
 
   def self.validate_positive(value, name)
@@ -32,7 +34,11 @@ module Validation
   def self.validate_with_lambda(lmbda_result, error_message)
     raise AttributeError, "\e[31m#{error_message}\e[0m" unless lmbda_result
   end
+
   def self.validate_natural_number(value, name)
-    raise AttributeError, "\e[31m#{name} must be a natural number!\e[0m" unless value.to_s.match? (REGEX_NATURAL_NUMBERS)
+    unless value.to_s.match?(REGEX_NATURAL_NUMBERS)
+      raise AttributeError,
+            "\e[31m#{name} must be a natural number!\e[0m"
+    end
   end
 end
