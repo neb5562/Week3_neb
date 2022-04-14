@@ -6,7 +6,7 @@ require 'validation'
 ARRAY_TEMPLATE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].freeze
 
 class ArrMissNum
-  include Validation
+  extend Validation
   MAX_NUMBER                = 10
   MIN_NUMBER                = 1
   USER_INPUT_ARR_SIZE       = 9
