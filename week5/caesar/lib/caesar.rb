@@ -11,7 +11,7 @@ MAX_UPCASE       = 90
 ALPHABET_REGEX   = /[[:alpha:]]/.freeze
 
 class Caesar
-  include Validation
+  extend Validation
   def initialize(str, shift)
     @str   = str
     @shift = shift
