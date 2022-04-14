@@ -10,7 +10,7 @@ class StockPicker
   ARRAY_SIZE_MESSAGE        = 'array size must be over 1'.freeze
   ARRAY_OF_INTEGERS_MESSAGE = 'array must include only integers'.freeze
 
-  include Validation
+  extend Validation
 
   def initialize(array)
     @stock_array = array
