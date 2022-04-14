@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 module Validation
   REGEX_VALIDATE_NUMBERS = /^-?(?!0\d)\d*(\.\d+)?$/.freeze
   REGEX_NATURAL_NUMBERS = /^\d+$/.freeze
