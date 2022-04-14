@@ -30,7 +30,7 @@ class StockPicker
     Validation.validate_presence(@stock_array, 'array')
     Validation.validate_with_lambda(@stock_array.empty? == false, EMPTY_ARRAY_MESSAGE)
     Validation.validate_with_lambda(@stock_array.size < ARRAY_MIN_SIZE == false, ARRAY_SIZE_MESSAGE)
-    Validation.validate_with_lambda(@stock_array.all?{ |num| num.is_a? Integer }, ARRAY_OF_INTEGERS_MESSAGE)
+    Validation.validate_with_lambda(@stock_array.all?{ |num| num.is_a? Integer } == false, ARRAY_OF_INTEGERS_MESSAGE)
   end
 
   def stock_picker
