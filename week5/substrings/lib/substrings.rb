@@ -6,7 +6,7 @@ require 'validation'
 
 class SubStrings
   EMPTY_ARRAY_MESSAGE = 'words array must not be empty!'.freeze
-  include Validation
+  extend Validation
   def initialize(sentence, words = [])
     @sentence   = sentence
     @words      = words
