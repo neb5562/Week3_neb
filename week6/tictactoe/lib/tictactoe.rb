@@ -12,11 +12,12 @@ class TicTacToe
   COLOR_GREEN_START = "\e[32m"
   COLOR_END         = "\e[0m"
   ALPHABET = ('a'..'z').to_a
+  STARTING_POINT = 0
 
   def initialize(player1, player2)
     @players    = []
-    @players[1] = Player.new(player1, 0)
-    @players[0] = Player.new(player2, 0)
+    @players[1] = Player.new(player1, STARTING_POINT)
+    @players[0] = Player.new(player2, STARTING_POINT)
     @board      = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
     @@turn      = 0
     @finished   = false
