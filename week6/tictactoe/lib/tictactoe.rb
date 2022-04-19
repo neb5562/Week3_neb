@@ -14,14 +14,14 @@ class TicTacToe
   ALPHABET = ('a'..'z').to_a
 
   def initialize(player1, player2)
-    @players = []
+    @players    = []
     @players[1] = Player.new(player1, 0)
     @players[0] = Player.new(player2, 0)
-    @board    = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
-    @@turn    = 0
-    @finished = false
-    @winner   = nil
-    @in_queue = @players[PLAYER_X_INDEX]
+    @board      = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
+    @@turn      = 0
+    @finished   = false
+    @winner     = nil
+    @in_queue   = @players[PLAYER_X_INDEX]
     put_board
   end
 
