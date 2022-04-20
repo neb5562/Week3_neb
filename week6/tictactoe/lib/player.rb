@@ -6,7 +6,7 @@ class Player
     @point = point
   end
 
-  def update_point(point)
+  def add_point(point)
     @point += point.to_i
   end
 end
