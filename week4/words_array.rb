@@ -17,3 +17,4 @@ end
 
 puts WordsArray.new(WORDS_ARRAY).longest_word
 puts WordsArray.new(WORDS_ARRAY).words_symbol_count
+
