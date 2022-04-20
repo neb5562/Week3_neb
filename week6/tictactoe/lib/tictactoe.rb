@@ -1,28 +1,31 @@
 #!/usr/bin/env ruby
 $LOAD_PATH << '../lib'
 
+class AttributeError < StandardError; end
+require 'validation'
 require 'player'
 
 class TicTacToe
+  extend Validation
+
   PLAYER_X_INDEX      = 1
   PLAYER_O_INDEX      = 0
   TITLE_SPACE_BETWEEN = 4
-  COLOR_RED_START     = "\e[31m"
-  COLOR_GREEN_START   = "\e[32m"
-  COLOR_END           = "\e[0m"
+  COLOR_RED_START     = "\e[31m".freeze
+  COLOR_GREEN_START   = "\e[32m".freeze
+  COLOR_END           = "\e[0m".freeze
   ALPHABET            = %w[a b c].freeze
-  STARTING_POINT      = 0
-  MESSAGE_TO_USER     = "%s, please enter index to fill: (example 'a1'), to end game enter: 'end'\n".freeze
+  MESSAGE_TO_USER     = "\n%s, please enter index to fill: (example 'a1'), to end game enter: 'end'\n".freeze
   GAME_OVER           = "\nGame Over!\n".freeze
   USER_RESULT_MESSAGE = "%s: %d points\n".freeze
   PLAY_AGAIN_MESSAGE  = "Play again? (y/n):\n".freeze
   PLAYER_WON_MESSAGE  = "Player %s won!\n".freeze
-  GAME_DRAW_MESSAGE   = "It's draw!\n".freeze
+  GAME_DRAW_MESSAGE   = "\nIt's draw!\n".freeze
 
   def initialize(player1, player2)
     @players                 = []
-    @players[PLAYER_X_INDEX] = Player.new(player1, STARTING_POINT)
-    @players[PLAYER_O_INDEX] = Player.new(player2, STARTING_POINT)
+    @players[PLAYER_X_INDEX] = Player.new(player1)
+    @players[PLAYER_O_INDEX] = Player.new(player2)
     @board                   = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
     @turn                    = 0
     @finished                = false
@@ -33,6 +36,8 @@ class TicTacToe
 
   def call
     run
+  rescue AttributeError => e
+    e.message
   end
 
   private
@@ -42,9 +47,10 @@ class TicTacToe
       put_board
       printf(MESSAGE_TO_USER, @in_queue.name)
       input = gets.chomp
-      finish if input == 'end'
+      Validation.validate_presence(input, "'move'")
+      finish if input.downcase == 'end'
       fill_board(input)
-      draw if board_full
+      draw if board_full && @winner.nil?
       @turn += 1
     end
   end

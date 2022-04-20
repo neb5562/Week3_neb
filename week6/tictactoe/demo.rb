@@ -8,4 +8,4 @@ player1 = gets.chomp
 puts 'please enter player two name: '
 player2 = gets.chomp
 
-game = TicTacToe.new(player1, player2).call
+puts TicTacToe.new(player1, player2).call
