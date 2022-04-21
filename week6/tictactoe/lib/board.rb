@@ -22,14 +22,14 @@ class Board
     t = @board.size - 1
 
     @board.each do |array|
-      next unless array.include?(nil) == false && array.uniq.size == 1
+      next unless check_line(array)
 
       return array[0]
     end
 
     second_board = @board.dup.transpose
     second_board.each do |array|
-      next unless array.include?(nil) == false && array.uniq.size == 1
+      next unless check_line(array)
 
       return array[0]
     end
@@ -41,13 +41,9 @@ class Board
       t -= 1
     end
 
-    if left_right.include?(nil) == false && left_right.uniq.size == 1
-      return left_right[0]
-    end
-
-    if right_left.include?(nil) == false && right_left.uniq.size == 1
-      return right_left[0]
-    end
+    
+    return left_right[0] if check_line(left_right)
+    return right_left[0] if check_line(right_left)
 
     return false
   end
@@ -58,5 +54,9 @@ class Board
 
   def can_fill(index1, index2)
     @board[index1][index2].nil?
+  end
+
+  def check_line(array)
+    array.include?(nil) == false && array.uniq.size == 1
   end
 end

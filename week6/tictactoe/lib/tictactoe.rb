@@ -94,8 +94,7 @@ class TicTacToe
     validations << Validation.validate_with_lambda(input.length == INPUT_STRING_LENGTH, INPUT_STRING_LENGTH_MESSAGE)
     index1 = ALPHABET.index(input[0].downcase).to_i
     index2 = input[1].to_i - 1
-    validations << Validation.validate_with_lambda(@board.can_fill(index1, index2), "same")
-    # Validation.validate_with_lambda(@board.board[index1][index2].nil?, INVALID_INPUT)
+    validations << Validation.validate_with_lambda(@board.can_fill(index1, index2), INVALID_INPUT)
     !validations.include? false
   end
 
@@ -160,25 +159,23 @@ class TicTacToe
     player.add_point(1) 
     @winner = player
     printf(PLAYER_WON_MESSAGE, @winner.name)
-    puts PLAY_AGAIN_MESSAGE
     play_again?
   end
 
   def draw
     put_board
     print GAME_DRAW_MESSAGE
-    print PLAY_AGAIN_MESSAGE
     play_again?
   end
 
   def play_again?
-    input = gets.chomp.downcase
-    if input == NO_NEW_GAME_COMMAND
-      finish 
-    end
-
-    if input == NEW_GAME_COMMAND
-      reset
+    inputs = [NO_NEW_GAME_COMMAND, NEW_GAME_COMMAND]
+    loop do
+      print PLAY_AGAIN_MESSAGE
+      input = gets.chomp.downcase
+      finish if input == NO_NEW_GAME_COMMAND
+      reset if input == NEW_GAME_COMMAND
+      break if inputs.include?(input)
     end
   end
 end
