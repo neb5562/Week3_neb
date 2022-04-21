@@ -1,8 +1,6 @@
 class Board
   attr_reader :board
 
-  ALREADY_FILLED_MESSAGE = 'block already filled!'.freeze
-
   def initialize(board)
     @board = board
   end
@@ -54,7 +52,6 @@ class Board
   end
 
   def fill_board(index1, index2, value)
-    Validation.validate_with_lambda(@board[index1][index2].nil?, ALREADY_FILLED_MESSAGE)
     @board[index1][index2] = value
   end
 end

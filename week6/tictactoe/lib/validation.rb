@@ -7,7 +7,11 @@ module Validation
   end
 
   def self.validate_presence(value, name)
-    raise AttributeError, "\e[31myou must enter #{name}!\e[0m" if value.to_s.empty?
+   if value.to_s.empty?
+    print "\e[31myou must enter #{name}!\e[0m" 
+
+    false 
+   end
   end
 
   def self.validate_range(value, name, range_start = nil, range_end = nil)
@@ -30,7 +34,11 @@ module Validation
   end
 
   def self.validate_with_lambda(lmbda_result, error_message)
-    raise AttributeError, "\e[31m#{error_message}\e[0m" unless lmbda_result
+    unless lmbda_result
+      print "\e[31m "+ error_message + "\e[0m"
+
+      false 
+    end
   end
 
   def self.validate_natural_number(value, name)

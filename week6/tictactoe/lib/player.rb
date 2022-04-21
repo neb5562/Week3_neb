@@ -11,14 +11,14 @@ class Player
   def initialize(name)
     @name  = name
     @point = 0
-    
+  end
+
+  def validate
     min_symbols_message = sprintf(PLAYER_NAME_MIN_SIZE_MESSAGE, PLAYER_NAME_MIN_SIZE)
     max_symbols_message = sprintf(PLAYER_NAME_MAX_SIZE_MESSAGE, PLAYER_NAME_MAX_SIZE)
     Validation.validate_presence(@name, "name")
-    #Validation.validate_with_lambda(@name.to_s.length > PLAYER_NAME_MIN_SIZE, min_symbols_message)
-    #Validation.validate_with_lambda(@name.to_s.length < PLAYER_NAME_MAX_SIZE, max_symbols_message)
-  rescue AttributeError => e
-    e.message
+    # Validation.validate_with_lambda(@name.to_s.length > PLAYER_NAME_MIN_SIZE, min_symbols_message)
+    # Validation.validate_with_lambda(@name.to_s.length < PLAYER_NAME_MAX_SIZE, max_symbols_message)
   end
 
   def add_point(point)
