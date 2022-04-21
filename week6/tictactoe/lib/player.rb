@@ -1,6 +1,8 @@
 class Player 
-  PLAYER_NAME_MIN_SIZE = 3
-  PLAYER_NAME_MAX_SIZE = 11
+  PLAYER_X_INDEX               = 1
+  PLAYER_O_INDEX               = 0
+  PLAYER_NAME_MIN_SIZE         = 3
+  PLAYER_NAME_MAX_SIZE         = 11
   PLAYER_NAME_MIN_SIZE_MESSAGE = "name must not be less than %s symbols!\n".freeze
   PLAYER_NAME_MAX_SIZE_MESSAGE = "name must not be over %s symbols!\n".freeze
 

@@ -2,36 +2,41 @@
 $LOAD_PATH << '../lib'
 
 class AttributeError < StandardError; end
-require 'validation'
-require 'player'
+require_relative 'validation'
+require_relative 'player'
+require_relative 'board'
 
 class TicTacToe
   extend Validation
 
-  PLAYER_X_INDEX      = 1
-  PLAYER_O_INDEX      = 0
+  ALPHABET            = %w[a b c].freeze
+  ALPHABET_INDEXES    = ALPHABET.each_with_index.map{ |v,k| k + 1 }
   TITLE_SPACE_BETWEEN = 4
   COLOR_RED_START     = "\e[31m".freeze
   COLOR_GREEN_START   = "\e[32m".freeze
   COLOR_END           = "\e[0m".freeze
-  ALPHABET            = %w[a b c].freeze
+  INPUT_STRING_LENGTH = 2
+  STOP_GAME_COMMAND   = 'end'.freeze
+  NO_NEW_GAME_COMMAND = 'n'.freeze
+  NEW_GAME_COMMAND    = 'y'.freeze
   MESSAGE_TO_USER     = "\n%s, please enter index to fill: (example 'a1'), to end game enter: 'end'\n".freeze
   GAME_OVER           = "\nGame Over!\n".freeze
   USER_RESULT_MESSAGE = "%s: %d points\n".freeze
   PLAY_AGAIN_MESSAGE  = "Play again? (y/n):\n".freeze
   PLAYER_WON_MESSAGE  = "Player %s won!\n".freeze
   GAME_DRAW_MESSAGE   = "\nIt's draw!\n".freeze
+  INVALID_INPUT       = "Invalid Input!\n".freeze
 
   def initialize(player1, player2)
     @players                 = []
-    @players[PLAYER_X_INDEX] = Player.new(player1)
-    @players[PLAYER_O_INDEX] = Player.new(player2)
-    @board                   = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
+    @players[Player::PLAYER_X_INDEX] = Player.new(player1)
+    @players[Player::PLAYER_O_INDEX] = Player.new(player2)
+    @board                   = Board.new([[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]])
     @turn                    = 0
     @finished                = false
     @winner                  = nil
-    @in_queue                = @players[PLAYER_X_INDEX]
-    @moves                   = {}
+    @in_queue                = @players[Player::PLAYER_X_INDEX]
+    @moves                   = []
   end
 
   def call
@@ -44,101 +49,82 @@ class TicTacToe
 
   def run 
     until @finished
-      put_board
+      validate_players()
+      put_board()
       printf(MESSAGE_TO_USER, @in_queue.name)
       input = gets.chomp
-      Validation.validate_presence(input, "'move'")
-      finish if input.downcase == 'end'
-      fill_board(input)
-      draw if board_full && @winner.nil?
+      check_finish(input)
+      validate(input)
+      @moves << input
+      index1 = ALPHABET.index(@moves.last[0].downcase).to_i
+      index2 = @moves.last[1].to_i - 1
+      @board.fill_board(index1, index2, @turn.modulo(2) == 1 ? 0 : 1)
+      line =  @board.winner_line?
+      round_won(@players[line]) if line 
+      draw() if @board.full? && @winner.nil?
       @turn += 1
+      queue_player()
     end
   end
 
-  def fill_board(turn)
-    index_of(turn)
-    check_winner
+  def validate(input)
+    Validation.validate_presence(input, "'move'")
+    Validation.validate_with_lambda(ALPHABET.include?(input[0]), INVALID_INPUT)
+    Validation.validate_with_lambda(ALPHABET_INDEXES.include?(input[1].to_i), INVALID_INPUT)
+    Validation.validate_with_lambda(input.length == INPUT_STRING_LENGTH, INVALID_INPUT)
+  end
+
+  def validate_players
+    Validation.validate_presence(@players[Player::PLAYER_X_INDEX].name, "name")
+    Validation.validate_presence(@players[Player::PLAYER_O_INDEX].name, "name")
+  end
+
+  def print_header
+    ALPHABET.size.times do |character|
+      print (' ' * TITLE_SPACE_BETWEEN).to_s + (character + 1).to_s
+    end
+    puts
   end
 
   def put_board
     index = 0
     print_header
-    @board.each do |item|
+    @board.board.each do |item|
       print "#{ALPHABET[index]} "
       item.each do |symb|
-        print '|   |' if symb.nil?
-        print "| #{COLOR_RED_START}X#{COLOR_END} |" if symb == PLAYER_X_INDEX
-        print "| #{COLOR_GREEN_START}O#{COLOR_END} |" if symb == PLAYER_O_INDEX
+        print_symbol(symb)
       end
       index += 1
       puts
     end
   end
 
-  def index_of(turn)
-    array_1 = ALPHABET.index(turn[0].downcase).to_i
-    array_2 = turn[1].to_i - 1
-    unless @board[array_1][array_2].nil?
-      @turn -= 1
-      return false
-    end
-    if @turn.even?
-      @board[array_1][array_2] = PLAYER_X_INDEX
-      @in_queue = @players[PLAYER_O_INDEX]
-    else
-      @board[array_1][array_2] = PLAYER_O_INDEX
-      @in_queue = @players[PLAYER_X_INDEX]
-    end
+  def print_symbol(symb)
+    print '|   |' if symb.nil?
+    print "| #{COLOR_RED_START}X#{COLOR_END} |" if symb == Player::PLAYER_X_INDEX
+    print "| #{COLOR_GREEN_START}O#{COLOR_END} |" if symb == Player::PLAYER_O_INDEX
   end
 
-  def check_winner
-    left_right = []
-    right_left = []
-    i = 0
-    t = @board.size - 1
-
-    @board.each do |array|
-      next unless array.include?(nil) == false && array.uniq.size == 1
-
-      round_won(@players[array[0]])
-      break
-    end
-
-    second_board = @board.dup.transpose
-    second_board.each do |array|
-      next unless array.include?(nil) == false && array.uniq.size == 1
-
-      round_won(@players[array[0]])
-      break
-    end
-
-    @board.size.times do
-      left_right << @board[i][i]
-      right_left << second_board.reverse[t][t]
-      i += 1
-      t -= 1
-    end
-
-    if left_right.include?(nil) == false && left_right.uniq.size == 1
-      round_won(@players[left_right[0]])
-    end
-
-    if right_left.include?(nil) == false && right_left.uniq.size == 1
-      round_won(@players[right_left[0]])
-    end
+  def queue_player
+    @in_queue = @players[@turn.modulo(2)]
   end
 
   def finish
     @finished = true
     print GAME_OVER
-    printf(USER_RESULT_MESSAGE, @players[0].name, @players[0].point)
-    printf(USER_RESULT_MESSAGE, @players[1].name, @players[1].point)
+    printf(USER_RESULT_MESSAGE, @players[Player::PLAYER_O_INDEX].name, @players[Player::PLAYER_O_INDEX].point)
+    printf(USER_RESULT_MESSAGE, @players[Player::PLAYER_X_INDEX].name, @players[Player::PLAYER_X_INDEX].point)
+    exit false
+  end
+
+  def check_finish(input)
+    finish if input.downcase == STOP_GAME_COMMAND
   end
 
   def reset
-    @board    = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
+    @board.reset
     @turn     = -1
-    @in_queue = @players[PLAYER_X_INDEX]
+    @in_queue = @players[Player::PLAYER_X_INDEX]
   end
 
   def round_won(player)
@@ -147,31 +133,26 @@ class TicTacToe
     @winner = player
     printf(PLAYER_WON_MESSAGE, @winner.name)
     puts PLAY_AGAIN_MESSAGE
-    if gets.chomp.downcase == 'n'
-      finish 
-    else
-      reset
-    end
+    play_again?
   end
 
   def draw
     put_board
     print GAME_DRAW_MESSAGE
     print PLAY_AGAIN_MESSAGE
-    if gets.chomp.downcase == 'n'
-      finish 
-    else
-      reset
-    end
-  end
-  def board_full
-    @board.map(&:compact).flatten.size == 9
+    play_again?
   end
 
-  def print_header
-    ALPHABET.size.times do |character|
-      print (' ' * TITLE_SPACE_BETWEEN).to_s + (character + 1).to_s
+  def play_again?
+    reset
+    input = gets.chomp.downcase
+    if input == NO_NEW_GAME_COMMAND
+      finish 
+    elsif input == NEW_GAME_COMMAND
+      reset
+    else
+      print INVALID_INPUT
+      finish
     end
-    puts
   end
 end
