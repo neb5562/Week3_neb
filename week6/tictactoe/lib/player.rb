@@ -1,27 +1,52 @@
 class Player 
-  PLAYER_X_INDEX               = 1
-  PLAYER_O_INDEX               = 0
+  PLAYER_INDEXES               = (0..1).to_a.freeze
   PLAYER_NAME_MIN_SIZE         = 3
   PLAYER_NAME_MAX_SIZE         = 11
-  PLAYER_NAME_MIN_SIZE_MESSAGE = "name must not be less than %s symbols!\n".freeze
-  PLAYER_NAME_MAX_SIZE_MESSAGE = "name must not be over %s symbols!\n".freeze
+  PLAYER_NAME_SIZE_MESSAGE     = "\e[31mName length must be between (%s-%s) symbols!\e[0m\n".freeze
 
-  attr_reader :name, :point
+  attr_reader :point, :index
 
-  def initialize(name)
+  def initialize(name, index)
     @name  = name
+    @index = index
     @point = 0
+    @moves = {}
   end
 
-  def validate
-    min_symbols_message = sprintf(PLAYER_NAME_MIN_SIZE_MESSAGE, PLAYER_NAME_MIN_SIZE)
-    max_symbols_message = sprintf(PLAYER_NAME_MAX_SIZE_MESSAGE, PLAYER_NAME_MAX_SIZE)
-    Validation.validate_presence(@name, "name")
-    # Validation.validate_with_lambda(@name.to_s.length > PLAYER_NAME_MIN_SIZE, min_symbols_message)
-    # Validation.validate_with_lambda(@name.to_s.length < PLAYER_NAME_MAX_SIZE, max_symbols_message)
+  def name
+    @name.capitalize
+  end
+
+  def valid?
+    ![valid_name?,valid_index?].any? false
+  end
+
+  def valid_name?
+    name_len = @name.to_s.length
+    min_size = name_len >= PLAYER_NAME_MIN_SIZE
+    max_size = name_len <= PLAYER_NAME_MAX_SIZE
+    result = min_size && max_size
+    why_invalid unless result
+    result
+  end
+
+  def valid_index?
+    PLAYER_INDEXES.include? @index
+  end
+
+  def why_invalid
+    printf(PLAYER_NAME_SIZE_MESSAGE, PLAYER_NAME_MIN_SIZE, PLAYER_NAME_MAX_SIZE)
   end
 
   def add_point(point)
     @point += point.to_i
+  end
+
+  def add_move(turn, move)
+    @moves[turn] = move
+  end
+
+  def moves
+    @moves
   end
 end

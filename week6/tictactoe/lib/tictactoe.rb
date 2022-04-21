@@ -16,7 +16,7 @@ class TicTacToe
   COLOR_GREEN_START           = "\e[32m".freeze
   COLOR_END                   = "\e[0m".freeze
   INPUT_STRING_LENGTH         = 2
-  INPUT_STRING_LENGTH_MESSAGE = "move input must be #{INPUT_STRING_LENGTH} characters!"
+  INPUT_STRING_LENGTH_MESSAGE = "\nmove input must be #{INPUT_STRING_LENGTH} characters!"
   STOP_GAME_COMMAND           = 'end'.freeze
   NO_NEW_GAME_COMMAND         = 'n'.freeze
   NEW_GAME_COMMAND            = 'y'.freeze
@@ -28,22 +28,24 @@ class TicTacToe
   GAME_DRAW_MESSAGE           = "\nIt's draw!\n".freeze
   INVALID_INPUT               = "\nInvalid Input!\n".freeze
   ALREADY_FILLED_MESSAGE      = "\nblock already filled!".freeze
+  INPUT_PLAYER_NAME_MESSAGE   = "please enter player %s name: ".freeze
+  PLAYERS_COUNT               = 2
 
-  def initialize(player1, player2)
+  def initialize
     @players                 = []
-    @players[Player::PLAYER_X_INDEX] = Player.new(player1)
-    @players[Player::PLAYER_O_INDEX] = Player.new(player2)
     @board                   = Board.new([[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]])
     @turn                    = 0
     @finished                = false
     @winner                  = nil
-    @in_queue                = @players[Player::PLAYER_X_INDEX]
-    @moves                   = []
+    @player_in_queue         = nil
     @current_input           = nil
   end
 
   def call
-    @players.map{ |player| player.validate }
+    until @players.size == PLAYERS_COUNT do
+      get_player()
+    end
+    @player_in_queue = @players[0]
     run
   rescue AttributeError => e
     e.message
@@ -53,33 +55,48 @@ class TicTacToe
 
   def run 
     until @finished
-      put_board()
-      loop do
-        printf(MESSAGE_TO_USER, @in_queue.name)
-        @current_input = gets.chomp
-        check_finish(@current_input)
-        break if validate(@current_input) != false
-      end
-      @moves << @current_input
-      index1 = ALPHABET.index(@moves.last[0].downcase).to_i
-      index2 = @moves.last[1].to_i - 1
-      @board.fill_board(index1, index2, @turn.modulo(2) == 1 ? 0 : 1)
+      put_board
+      get_turn
+      @player_in_queue.add_move(@turn, @current_input)
+      player_moves = @player_in_queue.moves
+      index1 = ALPHABET.index(player_moves[player_moves.keys.last][0].downcase).to_i
+      index2 = player_moves[player_moves.keys.last][1].to_i - 1
+      @board.fill_board(index1, index2, @turn.modulo(2))# if can_fil
       line =  @board.winner_line?
       round_won(@players[line]) if line 
-      draw() if @board.full? && @winner.nil?
+      draw if @board.full? && @winner.nil?
       @turn += 1
-      queue_player()
+      queue_player
     end
   end
 
+  def get_turn
+    loop do
+      printf(MESSAGE_TO_USER, @player_in_queue.name)
+      @current_input = gets.chomp
+      check_finish(@current_input)
+      break if validate(@current_input) != false
+    end
+  end
+  
+  def get_player
+    printf(INPUT_PLAYER_NAME_MESSAGE, @players.size.next)
+    name = gets.chomp
+    temp_player = Player.new(name, @players.size)
+    @players << temp_player if temp_player.valid?
+  end
+
   def validate(input)
-    Validation.validate_presence(input, "'move'")
+    validations = []
+    validations << Validation.validate_presence(input, "'move'")
     check_indexes = ALPHABET.include?(input[0].to_s) && ALPHABET_INDEXES.include?(input[1].to_i)
-    # Validation.validate_with_lambda(check_indexes, INVALID_INPUT)
-    Validation.validate_with_lambda(input.length == INPUT_STRING_LENGTH, INPUT_STRING_LENGTH_MESSAGE)
-    # index1 = ALPHABET.index(input[0].downcase).to_i
-    # index2 = input[1].to_i - 1
+    validations << Validation.validate_with_lambda(check_indexes, INVALID_INPUT)
+    validations << Validation.validate_with_lambda(input.length == INPUT_STRING_LENGTH, INPUT_STRING_LENGTH_MESSAGE)
+    index1 = ALPHABET.index(input[0].downcase).to_i
+    index2 = input[1].to_i - 1
+    validations << Validation.validate_with_lambda(@board.can_fill(index1, index2), "same")
     # Validation.validate_with_lambda(@board.board[index1][index2].nil?, INVALID_INPUT)
+    !validations.include? false
   end
 
   def print_header
@@ -107,20 +124,24 @@ class TicTacToe
   end
 
   def print_symbol(symb)
-    print '|   |' if symb.nil?
-    print "| #{COLOR_RED_START}X#{COLOR_END} |" if symb == Player::PLAYER_X_INDEX
-    print "| #{COLOR_GREEN_START}O#{COLOR_END} |" if symb == Player::PLAYER_O_INDEX
+    if symb.nil?
+      print '|   |' 
+    else
+      color = symb.zero? ? COLOR_RED_START : COLOR_GREEN_START
+      print "| #{color}#{Board::SYMBOLS[symb]}#{COLOR_END} |"
+    end
+    
   end
 
   def queue_player
-    @in_queue = @players[@turn.modulo(2) == 1 ? 0 : 1]
+    @player_in_queue = @players[@turn.modulo(2)]
   end
 
   def finish
     @finished = true
     print GAME_OVER
-    printf(USER_RESULT_MESSAGE, @players[Player::PLAYER_O_INDEX].name, @players[Player::PLAYER_O_INDEX].point)
-    printf(USER_RESULT_MESSAGE, @players[Player::PLAYER_X_INDEX].name, @players[Player::PLAYER_X_INDEX].point)
+    printf(USER_RESULT_MESSAGE, @players[0].name, @players[0].point)
+    printf(USER_RESULT_MESSAGE, @players[1].name, @players[1].point)
     exit false
   end
 
@@ -131,7 +152,7 @@ class TicTacToe
   def reset
     @board.reset
     @turn     = -1
-    @in_queue = @players[Player::PLAYER_X_INDEX]
+    @player_in_queue = @players[0]
   end
 
   def round_won(player)
@@ -151,7 +172,6 @@ class TicTacToe
   end
 
   def play_again?
-    reset
     input = gets.chomp.downcase
     if input == NO_NEW_GAME_COMMAND
       finish 

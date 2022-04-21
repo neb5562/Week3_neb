@@ -1,5 +1,6 @@
 class Board
   attr_reader :board
+  SYMBOLS = %w[X O].freeze
 
   def initialize(board)
     @board = board
@@ -53,5 +54,9 @@ class Board
 
   def fill_board(index1, index2, value)
     @board[index1][index2] = value
+  end
+
+  def can_fill(index1, index2)
+    @board[index1][index2].nil?
   end
 end
