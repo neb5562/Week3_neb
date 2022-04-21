@@ -90,13 +90,17 @@ class TicTacToe
     index = 0
     print_header
     @board.board.each do |item|
-      print "#{ALPHABET[index]} "
-      item.each do |symb|
-        print_symbol(symb)
-      end
-      index += 1
-      puts
+      print_line(item, index)
     end
+  end
+
+  def print_line(line, index)
+    print "#{ALPHABET[index]} "
+    line.each do |symb|
+      print_symbol(symb)
+    end
+    index += 1
+    puts
   end
 
   def print_symbol(symb)
