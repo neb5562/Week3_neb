@@ -3,27 +3,33 @@ $LOAD_PATH << './lib'
 
 require 'customenumerable'
 
-RSpec.describe Enumerable do
-  let(:rand_from) {1}
-  let(:rand_to) {9}
-  let(:rand_to_second) {9999}
-  100.times do
-    context Enumerable do
-      let(:array) { Array.new(rand(rand_from...rand_to)) { rand(rand_from...rand_to_second) } }
+RSpec.describe Array do
+  subject(:array) { [1, 1, 2, 3, 5, 8, 13, 21, 34] }
 
-      it ".each and .my_each must return same result" do
-        first_array  = []
-        second_array = []
-
-        array.each do |item|
-          first_array << item
+  describe '#my_each' do
+    context 'when given a block' do
+      it 'returns the original array' do
+        my_each_results = array.my_each do |_element|
+          # This should return the original array
+          # no matter the contents of the block
         end
 
-        array.my_each do |item|
-          second_array << item
+        expect(my_each_results).to eq(array)
+      end
+
+      it 'executes the block for each element' do
+        my_each_results = []
+        each_results = []
+
+        array.my_each do |element|
+          my_each_results << element * 2
         end
 
-        expect(first_array).to eq(second_array)
+        array.each do |element|
+          each_results << element * 2
+        end
+
+        expect(my_each_results).to eq(each_results)
       end
     end
   end

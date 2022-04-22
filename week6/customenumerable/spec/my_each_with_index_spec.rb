@@ -4,26 +4,32 @@ $LOAD_PATH << './lib'
 require 'customenumerable'
 
 RSpec.describe Enumerable do
-  let(:rand_from) {1}
-  let(:rand_to) {9}
-  let(:rand_to_second) {9999}
-  100.times do
-    context Enumerable do
-      let(:array) { Array.new(rand(rand_from...rand_to)) { rand(rand_from...rand_to_second) } }
+  subject(:enumerable) { [1, 1, 2, 3, 5, 8, 13, 21, 34] }
 
-      it ".each_with_index and .my_each_with_index must return same result" do
-        first_array  = []
-        second_array = []
-
-        array.each_with_index do |item, index|
-          first_array << { item => index}
+  describe '#my_each_with_index' do
+    context 'when given a block' do
+      it 'returns the original enumerable' do
+        my_each_with_index_results = enumerable.my_each_with_index do |_element|
+          # This should return the original enumerable
+          # no matter the contents of the block
         end
 
-        array.my_each_with_index do |item, index|
-          second_array << { item => index}
+        expect(my_each_with_index_results).to eq(enumerable)
+      end
+
+      it 'executes the block for each element and index' do
+        my_each_with_index_results = []
+        each_with_index_results = []
+
+        enumerable.my_each_with_index do |element, index|
+          my_each_with_index_results << [element * 2, index * 2]
         end
 
-        expect(first_array).to eq(second_array)
+        enumerable.each_with_index do |element, index|
+          each_with_index_results << [element * 2, index * 2]
+        end
+
+        expect(my_each_with_index_results).to eq(each_with_index_results)
       end
     end
   end
