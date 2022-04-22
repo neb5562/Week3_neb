@@ -14,5 +14,4 @@ a = [ false, nil]
 # p a.my_count(1)
 # p a.count(1)
 
-p a.none? 
-p a.my_none? 
+p a.my_none? 1,2,3,4 

@@ -1,4 +1,5 @@
 module Enumerable
+  ARGUMENT_ERROR_MESSAGE = "wrong number of arguments (given %s, expected 0..1)".freeze
   def my_each
     index = 0
     if block_given?
@@ -43,7 +44,7 @@ module Enumerable
 
   def my_count(*parameter)
     if  parameter.count > 1
-      raise ArgumentError.new("wrong number of arguments (given #{parameter.count}, expected 0..1)") 
+      raise ArgumentError.new(sprintf(ARGUMENT_ERROR_MESSAGE, parameter.count)) 
     end
     count = 0
     index = 0
@@ -62,7 +63,7 @@ module Enumerable
 
   def my_none?(*parameter)
     if  parameter.count > 1
-      raise ArgumentError.new("wrong number of arguments (given #{parameter.count}, expected 0..1)") 
+      raise ArgumentError.new(sprintf(ARGUMENT_ERROR_MESSAGE, parameter.count))
     end
     count = 0
     index = 0
