@@ -7,6 +7,7 @@ require_relative 'player'
 require_relative 'board'
 
 class TicTacToe
+  attr_accessor :players, :board, :player_in_queue
   extend Validation
 
   ALPHABET                    = %w[a b c].freeze
@@ -45,10 +46,13 @@ class TicTacToe
     until @players.size == PLAYERS_COUNT do
       get_player()
     end
-    @player_in_queue = @players[0]
     run
   rescue AttributeError => e
     e.message
+  end
+
+  def get_action
+    gets.chomp
   end
 
   private
@@ -73,7 +77,7 @@ class TicTacToe
   def get_turn
     loop do
       printf(MESSAGE_TO_USER, @player_in_queue.name)
-      @current_input = gets.chomp
+      @current_input = get_action
       check_finish(@current_input)
       break if validate(@current_input) != false
     end
@@ -81,9 +85,18 @@ class TicTacToe
   
   def get_player
     printf(INPUT_PLAYER_NAME_MESSAGE, @players.size.next)
-    name = gets.chomp
-    temp_player = Player.new(name, @players.size)
-    @players << temp_player if temp_player.valid?
+    name = get_action
+    add_player(name)
+  end
+
+  def add_player(player)
+    size = @players.size
+    temp_player = Player.new(player, @players.size)
+    if temp_player.valid?
+      @players << temp_player 
+      @player_in_queue ||= @players[0]
+    end
+    @players.size > size
   end
 
   def validate(input)
@@ -172,7 +185,7 @@ class TicTacToe
     inputs = [NO_NEW_GAME_COMMAND, NEW_GAME_COMMAND]
     loop do
       print PLAY_AGAIN_MESSAGE
-      input = gets.chomp.downcase
+      input = get_action.downcase
       finish if input == NO_NEW_GAME_COMMAND
       reset if input == NEW_GAME_COMMAND
       break if inputs.include?(input)

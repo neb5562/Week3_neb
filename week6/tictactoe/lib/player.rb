@@ -4,7 +4,7 @@ class Player
   PLAYER_NAME_MAX_SIZE         = 11
   PLAYER_NAME_SIZE_MESSAGE     = "\e[31mName length must be between (%s-%s) symbols!\e[0m\n".freeze
 
-  attr_reader :point, :index
+  attr_reader :name, :point, :index
 
   def initialize(name, index)
     @name  = name
