@@ -7,7 +7,7 @@ require_relative 'player'
 require_relative 'board'
 
 class TicTacToe
-  attr_accessor :players, :board, :player_in_queue, :turn
+  attr_accessor :players, :board, :player_in_queue, :turn, :finished, :current_input, :check_game_state, :winner, :save_turn
   extend Validation
 
   ALPHABET                    = %w[a b c].freeze
@@ -60,17 +60,10 @@ class TicTacToe
       put_board
       get_turn
       save_turn
-      line =  @board.winner_line?
-      round_won(@players[line]) if line 
-      draw if @board.full? && @winner.nil?
+      check_game_state
       increase_turn
       queue_player
     end
-  end
-
-  def save_turn
-    @player_in_queue.add_move(@turn, @current_input)
-    @board.fill_board(get_indexes, @turn.modulo(2))
   end
 
   def increase_turn
@@ -83,7 +76,7 @@ class TicTacToe
 
   def add_player(player)
     size = @players.size
-    if player.valid?
+    if player.valid? && players.size < 2
       @players << player 
       @player_in_queue ||= @players[0]
     end
@@ -110,6 +103,18 @@ class TicTacToe
   
   def queue_player
     @player_in_queue = @players[@turn.modulo(2)]
+  end
+
+  def check_game_state
+    line =  @board.winner_line?
+    round_won(@players[line]) if line 
+    draw if @board.full? && @winner.nil?
+  end
+
+
+  def save_turn
+    @player_in_queue.add_move(@turn, @current_input)
+    @board.fill_board(get_indexes, @turn.modulo(2))
   end
 
   private
