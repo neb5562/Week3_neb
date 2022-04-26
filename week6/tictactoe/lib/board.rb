@@ -6,15 +6,6 @@ class Board
     @board = board
   end
 
-  def reset
-    @board = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
-  end
-
-
-  def full?
-    @board.map(&:compact).flatten.size == 9
-  end
-
   def winner_line?
     left_right = []
     right_left = []
@@ -48,13 +39,23 @@ class Board
     return false
   end
 
-  def fill_board(index1, index2, value)
-    @board[index1][index2] = value
+  def fill_board(indexes, value)
+    @board[indexes[0]][indexes[1]] = value
   end
 
-  def can_fill(index1, index2)
-    @board[index1][index2].nil?
+  def full?
+    @board.map(&:compact).flatten.size == 9
   end
+
+  def can_fill(indexes)
+    @board[indexes[0]][indexes[1]].nil?
+  end
+  
+  def reset
+    @board = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
+  end
+
+  private
 
   def check_line(array)
     array.include?(nil) == false && array.uniq.size == 1

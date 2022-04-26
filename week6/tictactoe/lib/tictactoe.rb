@@ -7,7 +7,7 @@ require_relative 'player'
 require_relative 'board'
 
 class TicTacToe
-  attr_accessor :players, :board, :player_in_queue
+  attr_accessor :players, :board, :player_in_queue, :turn
   extend Validation
 
   ALPHABET                    = %w[a b c].freeze
@@ -44,7 +44,7 @@ class TicTacToe
 
   def call
     until @players.size == PLAYERS_COUNT do
-      get_player()
+      get_player
     end
     run
   rescue AttributeError => e
@@ -55,24 +55,64 @@ class TicTacToe
     gets.chomp
   end
 
-  private
-
   def run 
     until @finished
       put_board
       get_turn
-      @player_in_queue.add_move(@turn, @current_input)
-      player_moves = @player_in_queue.moves
-      index1 = ALPHABET.index(player_moves[player_moves.keys.last][0].downcase).to_i
-      index2 = player_moves[player_moves.keys.last][1].to_i - 1
-      @board.fill_board(index1, index2, @turn.modulo(2))# if can_fil
+      save_turn
       line =  @board.winner_line?
       round_won(@players[line]) if line 
       draw if @board.full? && @winner.nil?
-      @turn += 1
+      increase_turn
       queue_player
     end
   end
+
+  def save_turn
+    @player_in_queue.add_move(@turn, @current_input)
+    @board.fill_board(get_indexes, @turn.modulo(2))
+  end
+
+  def increase_turn
+    @turn += 1
+  end
+
+  def decrease_turn
+    @turn -= 1
+  end
+
+  def add_player(player)
+    size = @players.size
+    if player.valid?
+      @players << player 
+      @player_in_queue ||= @players[0]
+    end
+    @players.size > size
+  end
+
+  def get_indexes
+    player_moves = @player_in_queue.moves
+    index1 = ALPHABET.index(player_moves[player_moves.keys.last][0].downcase).to_i
+    index2 = player_moves[player_moves.keys.last][1].to_i - 1
+    [index1, index2]
+  end
+
+  def validate(input)
+    validations = []
+    validations << Validation.validate_presence(input, "'move'")
+    check_indexes = ALPHABET.include?(input[0].to_s) && ALPHABET_INDEXES.include?(input[1].to_i)
+    validations << Validation.validate_with_lambda(check_indexes, INVALID_INPUT)
+    validations << Validation.validate_with_lambda(input.length == INPUT_STRING_LENGTH, INPUT_STRING_LENGTH_MESSAGE)
+    indexes = [ALPHABET.index(input[0].downcase).to_i, input[1].to_i - 1]
+    validations << Validation.validate_with_lambda(@board.can_fill(indexes), INVALID_INPUT)
+    !validations.include? false
+  end
+  
+  def queue_player
+    @player_in_queue = @players[@turn.modulo(2)]
+  end
+
+  private
 
   def get_turn
     loop do
@@ -86,30 +126,9 @@ class TicTacToe
   def get_player
     printf(INPUT_PLAYER_NAME_MESSAGE, @players.size.next)
     name = get_action
-    add_player(name)
+    add_player(Player.new(name, @players.size))
   end
 
-  def add_player(player)
-    size = @players.size
-    temp_player = Player.new(player, @players.size)
-    if temp_player.valid?
-      @players << temp_player 
-      @player_in_queue ||= @players[0]
-    end
-    @players.size > size
-  end
-
-  def validate(input)
-    validations = []
-    validations << Validation.validate_presence(input, "'move'")
-    check_indexes = ALPHABET.include?(input[0].to_s) && ALPHABET_INDEXES.include?(input[1].to_i)
-    validations << Validation.validate_with_lambda(check_indexes, INVALID_INPUT)
-    validations << Validation.validate_with_lambda(input.length == INPUT_STRING_LENGTH, INPUT_STRING_LENGTH_MESSAGE)
-    index1 = ALPHABET.index(input[0].downcase).to_i
-    index2 = input[1].to_i - 1
-    validations << Validation.validate_with_lambda(@board.can_fill(index1, index2), INVALID_INPUT)
-    !validations.include? false
-  end
 
   def print_header
     ALPHABET.size.times do |character|
@@ -145,10 +164,6 @@ class TicTacToe
     
   end
 
-  def queue_player
-    @player_in_queue = @players[@turn.modulo(2)]
-  end
-
   def finish
     @finished = true
     print GAME_OVER
@@ -163,7 +178,7 @@ class TicTacToe
 
   def reset
     @board.reset
-    @turn     = -1
+    decrease_turn
     @player_in_queue = @players[0]
   end
 
