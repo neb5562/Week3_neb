@@ -40,9 +40,11 @@ class TicTacToe
     @winner                  = nil
     @player_in_queue         = nil
     @current_input           = nil
+    @show_messages           = false
   end
 
   def call
+    @show_messages = true
     until @players.size == PLAYERS_COUNT do
       get_player
     end
@@ -109,6 +111,10 @@ class TicTacToe
     line =  @board.winner_line?
     round_won(@players[line]) if line 
     draw if @board.full? && @winner.nil?
+
+    if line || (@board.full? && @winner.nil?)
+      play_again?
+    end
   end
 
 
@@ -192,13 +198,11 @@ class TicTacToe
     player.add_point(1) 
     @winner = player
     printf(PLAYER_WON_MESSAGE, @winner.name)
-    play_again?
   end
 
   def draw
     put_board
     print GAME_DRAW_MESSAGE
-    play_again?
   end
 
   def play_again?

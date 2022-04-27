@@ -5,6 +5,7 @@ $LOAD_PATH << './lib'
 RSpec.describe TicTacToe do
 
 	context "check initialize" do
+		subject { described_class.new }
 		let(:player_name_1) { 'Gia' }
 		let(:player_name_2) { 'Agi' }
 		let(:invalid_player_name) { 'Gi' }
@@ -51,6 +52,7 @@ RSpec.describe TicTacToe do
 	end
 
 	context "player and turns" do
+		subject { described_class.new }
 		let(:player_name_1) { 'Gia' }
 		let(:player_name_2) { 'Agi' }
 		let(:valid_move){ 'a1' }
@@ -96,6 +98,7 @@ RSpec.describe TicTacToe do
 	end
 
 	context "game states" do
+		subject { described_class.new }
 		let(:player_name_1) { 'Gia' }
 		let(:player_name_2) { 'Agi' }
 		let(:player1) { instance_double('Player', name: player_name_1, index: subject.players.size, valid?: true, add_point: true) }
@@ -115,5 +118,34 @@ RSpec.describe TicTacToe do
 			expect(subject.board.winner_line?).to eq(0)
 			expect(subject.board.full?).to eq(false)
 		end
+
+		it "player 2 wins" do
+			subject.add_player(player1)
+			subject.add_player(player2)
+
+			['a1', 'b1', 'c1', 'b2', 'a2', 'b3'].each do |turn|
+				subject.current_input = turn
+				subject.board.board[%w[a b c].index(turn[0])][turn[1].to_i - 1] = subject.turn.modulo(2)
+				subject.increase_turn
+				subject.queue_player
+			end
+			expect(subject.board.winner_line?).to eq(1)
+			expect(subject.board.full?).to eq(false)
+		end
+
+		it "game is draw" do
+			subject.add_player(player1)
+			subject.add_player(player2)
+
+			['a1', 'a2', 'a3', 'b1', 'c1', 'b2', 'c2', 'c3', 'b3'].each do |turn|
+				subject.current_input = turn
+				subject.board.board[%w[a b c].index(turn[0])][turn[1].to_i - 1] = subject.turn.modulo(2)
+				subject.increase_turn
+				subject.queue_player
+			end
+			expect(subject.board.winner_line?).to eq(false)
+			expect(subject.board.full?).to eq(true)
+		end
+
 	end
 end

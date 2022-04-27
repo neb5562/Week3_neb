@@ -35,7 +35,7 @@ module Validation
 
   def self.validate_with_lambda(lmbda_result, error_message)
     unless lmbda_result
-      print "\e[31m "+ error_message + "\e[0m"
+      print "\e[31m " + error_message + "\e[0m"
 
       false 
     end
