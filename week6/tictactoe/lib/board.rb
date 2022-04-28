@@ -1,0 +1,63 @@
+class Board
+  attr_reader :board
+  SYMBOLS = %w[X O].freeze
+
+  def initialize(board)
+    @board = board
+  end
+
+  def winner_line?
+    left_right = []
+    right_left = []
+    i = 0
+    t = @board.size - 1
+
+    @board.each do |array|
+      next unless check_line(array)
+
+      return array[0]
+    end
+
+    second_board = @board.dup.transpose
+    second_board.each do |array|
+      next unless check_line(array)
+
+      return array[0]
+    end
+
+    @board.size.times do
+      left_right << @board[i][i]
+      right_left << second_board.reverse[t][t]
+      i += 1
+      t -= 1
+    end
+
+    
+    return left_right[0] if check_line(left_right)
+    return right_left[0] if check_line(right_left)
+
+    return false
+  end
+
+  def fill_board(indexes, value)
+    @board[indexes[0]][indexes[1]] = value
+  end
+
+  def full?
+    @board.map(&:compact).flatten.size == 9
+  end
+
+  def can_fill(indexes)
+    @board[indexes[0]][indexes[1]].nil?
+  end
+  
+  def reset
+    @board = [[nil, nil, nil], [nil, nil, nil], [nil, nil, nil]]
+  end
+
+  private
+
+  def check_line(array)
+    array.include?(nil) == false && array.uniq.size == 1
+  end
+end
