@@ -9,6 +9,7 @@ SUBSTR_DOWNCASE  = 97
 MAX_DOWNCASE     = 122
 MAX_UPCASE       = 90
 ALPHABET_REGEX   = /[[:alpha:]]/.freeze
+UPPER_CASE_REGEX = /[[:upper:]]/.freeze
 
 class Caesar
   extend Validation
@@ -62,6 +63,6 @@ class Caesar
   end
 
   def is_uppercase?(char)
-    /[[:upper:]]/.match?(char)
+    UPPER_CASE_REGEX.match?(char)
   end
 end
