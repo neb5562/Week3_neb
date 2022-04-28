@@ -10,5 +10,5 @@ str = gets.chomp
 puts "please enter shift number:"
 shift = gets.chomp
 
-print Caesar.new(str, shift).call
+puts Caesar.new(str, shift).call
 

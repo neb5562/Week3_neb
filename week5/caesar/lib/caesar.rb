@@ -37,19 +37,31 @@ class Caesar
     @str.split('').map do |char|
       # if char is part of alphabet
       if char.match?(ALPHABET_REGEX)
-        # check if downcase or upcase
-        if char.ord.between?(SUBSTR_DOWNCASE, MAX_DOWNCASE)
-          to_skip = SUBSTR_DOWNCASE
-          char.downcase
-        else
-          to_skip = SUBSTR_UPPERCASE
-          char.upcase
-        end
-        temp_string << ((((char.ord - to_skip) + @shift.to_i) % 26) + to_skip).chr
+        temp_string << ((((char_case(char).ord - char_skip(char)) + @shift.to_i) % 26) + char_skip(char)).chr
       else
         temp_string << char
       end
     end
     temp_string
+  end
+
+  def char_case(char)
+    unless is_uppercase?(char)
+      char.downcase
+    else
+      char.upcase
+    end
+  end
+
+  def char_skip(char)
+    unless is_uppercase?(char)
+      SUBSTR_DOWNCASE
+    else
+      SUBSTR_UPPERCASE
+    end
+  end
+
+  def is_uppercase?(char)
+    /[[:upper:]]/.match?(char)
   end
 end
