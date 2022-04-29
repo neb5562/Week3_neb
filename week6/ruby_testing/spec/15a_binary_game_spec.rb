@@ -130,9 +130,13 @@ describe BinaryGame do
 
     context 'when user inputs an incorrect value once, then a valid input' do
       before do
+        error_message = "Input error! Please enter a number between 1 or 10."
+        allow(game_input).to receive(:puts).with(error_message).once
+        
       end
 
-      xit 'completes loop and displays error message once' do
+      it 'completes loop and displays error message once' do
+        game_input.player_input(1, 10)
       end
     end
 

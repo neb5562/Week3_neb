@@ -135,7 +135,7 @@ describe NumberGame do
       # To test the behavior, we want to test that the loop stops before the
       # puts 'Input error!' line. In order to test that this method is not
       # called, we use a message expectation.
-      # https://relishapp.com/rspec/rspec-mocks/docs
+      # https://relishapp.com/rspec/rspec-mocks/docs 
 
       it 'stops loop and does not display error message' do
         valid_input = '3'
