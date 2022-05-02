@@ -26,11 +26,10 @@ class Node
     size = word.chars.size
     obj = have_in_childs(word)[0]
     last = false
-    size.times do
+    until obj.nil? do
       last = obj
       str += obj.to_s
       obj = obj.next[0]
-      # not working
     end
     if is_word
       str == word && last.is_end == true

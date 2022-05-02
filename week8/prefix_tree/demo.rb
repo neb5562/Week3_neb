@@ -25,4 +25,4 @@ pp tree.include? 'giale'
 
 
 pp tree.find 'gialo'
-pp tree.find 'gialoo' # not working
+pp tree.find 'gialoo'
