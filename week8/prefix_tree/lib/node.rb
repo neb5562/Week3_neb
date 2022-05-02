@@ -12,27 +12,19 @@ class Node
   end
   
   def add(word)
-    have = @next.select{ |item| item.to_s == word[0].to_s }
-    # check if any next have char
-    unless word.length == 0
+    have = have_in_childs(word)
+    return nil if word.length == 0
       if have.empty?
-        obj = Node.new
-        obj.is_end = true if word.length == 1
-        obj.char = word.to_s[0]
-        obj.add(word.to_s[1..-1])
-        @next << obj
+        no_child_found(word)
       else
-        have.first.is_end = true if word.length == 1
-        have.first.char = word[0]
-        have.first.add(word.to_s[1..-1])
+        child_found(have, word)
       end
-    end
   end
 
   def include?(word, is_word = false)
     str = ""
     size = word.chars.size
-    obj = @next.select{ |item| item.to_s == word[0] }[0]
+    obj = have_in_childs(word)[0]
     last = false
     size.times do
       last = obj
@@ -40,7 +32,7 @@ class Node
       obj = obj.next[0]    
     end
     if is_word
-    str == word && last.is_end == true
+      str == word && last.is_end == true
     else
       str == word
     end
@@ -62,4 +54,23 @@ class Node
     @char
   end
 
+  private
+
+  def no_child_found(word)
+    obj = Node.new
+    obj.is_end = true if word.length == 1
+    obj.char = word.to_s[0]
+    obj.add(word.to_s[1..-1])
+    @next << obj
+  end
+
+  def child_found(have, word)
+    have.first.is_end = true if word.length == 1
+    have.first.char = word[0]
+    have.first.add(word.to_s[1..-1])
+  end
+
+  def have_in_childs(word)
+    @next.select{ |item| item.to_s == word[0].to_s }
+  end
 end
