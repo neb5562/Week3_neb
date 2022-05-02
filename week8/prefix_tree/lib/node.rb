@@ -29,7 +29,8 @@ class Node
     size.times do
       last = obj
       str += obj.to_s
-      obj = obj.next[0]    
+      obj = obj.next[0]
+      # not working
     end
     if is_word
       str == word && last.is_end == true
@@ -47,7 +48,7 @@ class Node
   end
 
   def find(string)
-    include? string, true
+    include?(string, true)
   end
 
   def to_s
