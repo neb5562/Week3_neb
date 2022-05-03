@@ -2,13 +2,15 @@
 $LOAD_PATH << '../lib'
 
 class Node
-  attr_accessor :char, :is_end, :next
+  attr_accessor :char, :is_end, :roots, :is_root
+  attr_reader :count
 
   def initialize(root = false)
     @char = nil
     @is_end = false
-    @next = []
+    @roots = []
     @is_root = root
+    @count = 1
   end
   
   def add(word)
@@ -20,26 +22,22 @@ class Node
         child_found(have, word)
       end
   end
-
+  
   def include?(word, is_word = false)
     str = ""
-    size = word.chars.size
-    obj = have_in_childs(word)[0]
+    obj = self
     last = false
-    until obj.nil? do
-      last = obj
+
+    word.chars.each do |chr|
+      return false if obj.nil?
+      obj = obj.roots.select{ |item| item.to_s == chr}.first
       str += obj.to_s
-      obj = obj.next[0]
     end
-    if is_word
-      str == word && last.is_end == true
-    else
-      str == word
-    end
+    is_word ? (str == word && obj.is_end == true) : str == word
   end
 
   def list
-
+    recursive_print_list(self)
   end
 
   def delete
@@ -54,23 +52,44 @@ class Node
     @char
   end
 
+  def increase_count
+    @count += 1
+  end
+
   private
+
+  def recursive_print_list(obj)
+    print "#{obj}" unless obj.is_root
+    
+    obj.roots.each do |child|
+      recursive_print_list(child)
+    end
+
+    if obj.roots.empty?
+      puts "\n--------"
+    end
+  end
+
+  def downcase_char(char)
+    char.to_s.downcase
+  end
 
   def no_child_found(word)
     obj = Node.new
     obj.is_end = true if word.length == 1
-    obj.char = word.to_s[0]
+    obj.char = downcase_char(word[0])
     obj.add(word.to_s[1..-1])
-    @next << obj
+    @roots << obj
   end
 
   def child_found(have, word)
     have.first.is_end = true if word.length == 1
-    have.first.char = word[0]
+    have.first.char = downcase_char(word[0])
     have.first.add(word.to_s[1..-1])
+    have.first.increase_count
   end
 
   def have_in_childs(word)
-    @next.select{ |item| item.to_s == word[0].to_s }
+    @roots.select{ |item| item.to_s == downcase_char(word[0]) }
   end
 end
