@@ -39,7 +39,7 @@ class Node
 
   def list(word = "")
     where = word.empty? ? self : have_in_childs(word)[0]
-    recursive_print_list(where, word)
+    recursive_list(where, word)
     pp @tree.sort_by { |s| s.scan(/\d+/).first.to_i }
   end
 
@@ -61,12 +61,12 @@ class Node
 
   private
 
-  def recursive_print_list(obj, prefix = "", str = "")
+  def recursive_list(obj, prefix = "", str = "")
     str += obj.to_s || ""
 
     @tree << str if obj.is_end
     obj.roots.each do |child|
-      recursive_print_list(child, prefix, str)
+      recursive_list(child, prefix, str)
     end
   end
 
