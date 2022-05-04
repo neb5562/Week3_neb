@@ -9,6 +9,7 @@ tree = Node.new(true)
 
 tree.add("depeche")
 tree.add("dep")
+tree.add("dep")
 tree.add("gialo")
 tree.add("giala")
 tree.add("gialebo")
@@ -23,7 +24,7 @@ tree.add("home")
 tree.add("work")
 tree.add("rembo")
 tree.add("rails")
-
+tree.add("e")
 # pp tree.include? 'gia'
 # pp tree.include? 'dep'
 # pp tree.include? 'he'
@@ -36,4 +37,4 @@ tree.add("rails")
 # pp tree.find 'gialoo'
 
 
-tree.list
+tree.list("hou")

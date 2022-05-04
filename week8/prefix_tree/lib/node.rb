@@ -11,6 +11,7 @@ class Node
     @roots = []
     @is_root = root
     @count = 1
+    @tree = []
   end
   
   def add(word)
@@ -36,8 +37,10 @@ class Node
     is_word ? (str == word && obj.is_end == true) : str == word
   end
 
-  def list
-    recursive_print_list(self)
+  def list(word = "")
+    where = word.empty? ? self : have_in_childs(word)[0]
+    recursive_print_list(where, word)
+    pp @tree.sort_by { |s| s.scan(/\d+/).first.to_i }
   end
 
   def delete
@@ -58,15 +61,12 @@ class Node
 
   private
 
-  def recursive_print_list(obj)
-    print "#{obj}" unless obj.is_root
-    
-    obj.roots.each do |child|
-      recursive_print_list(child)
-    end
+  def recursive_print_list(obj, prefix = "", str = "")
+    str += obj.to_s || ""
 
-    if obj.roots.empty?
-      puts "\n--------"
+    @tree << str if obj.is_end
+    obj.roots.each do |child|
+      recursive_print_list(child, prefix, str)
     end
   end
 
