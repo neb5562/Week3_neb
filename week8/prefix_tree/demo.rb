@@ -36,5 +36,8 @@ tree.add("e")
 # pp tree.find 'ab'
 # pp tree.find 'gialoo'
 
+# make demo interactive. let user choose which function to call.
 
-tree.list("hou")
+puts "enter word for list:(press enter to get all list items)"
+word = gets.chomp
+tree.list(word)

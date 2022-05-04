@@ -40,7 +40,13 @@ class Node
   def list(word = "")
     where = word.empty? ? self : have_in_childs(word)[0]
     recursive_list(where, word)
+    count 
     pp @tree.sort_by { |s| s.scan(/\d+/).first.to_i }
+    
+  end
+
+  def count
+    puts "found #{@tree.size} results:"
   end
 
   def delete
@@ -62,8 +68,20 @@ class Node
   private
 
   def recursive_list(obj, prefix = "", str = "")
+    return false if obj.nil?
+    
+    if prefix.length > 0 && include?(prefix)
+      obj = self
+      prefix.chars.each do |chr|
+        obj = obj.roots.select{ |item| item.to_s == chr}.first
+      end
+      recursive_list(obj, "", prefix[0..-2])
+
+      return false
+    end
     str += obj.to_s || ""
 
+    
     @tree << str if obj.is_end
     obj.roots.each do |child|
       recursive_list(child, prefix, str)
