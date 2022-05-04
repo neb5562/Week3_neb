@@ -40,16 +40,19 @@ class Node
   def list(word = "")
     where = word.empty? ? self : have_in_childs(word)[0]
     recursive_list(where, word)
-    count 
     pp @tree.sort_by { |s| s.scan(/\d+/).first.to_i }
     
   end
 
-  def count
-    puts "found #{@tree.size} results:"
-  end
-
-  def delete
+  #not working
+  def delete(word)
+    return "please enter word\n" if word.empty?
+    return "to delete word must exit in tree\n" unless find(word)
+    
+    obj = self
+    word.chars.each do |chr|
+      obj.roots.delete_if{ |item| item.to_s == chr && item.count == 1}
+    end
 
   end
 

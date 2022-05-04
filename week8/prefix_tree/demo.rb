@@ -39,6 +39,8 @@ tree.add("e")
 
 # make demo interactive. let user choose which function to call.
 
-puts "enter word for list:(press enter to get all list items)"
-word = gets.chomp
-tree.list(word)
+# puts "enter word for list:(press enter to get all list items)"
+# word = gets.chomp
+tree.delete("rails")
+
+tree.list
