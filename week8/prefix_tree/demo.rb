@@ -3,6 +3,7 @@ $LOAD_PATH << './lib'
 
 
 require 'node'
+require 'csv'
 require 'pp'
 
 tree = Node.new(true)
