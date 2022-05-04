@@ -25,6 +25,7 @@ tree.add("home")
 tree.add("work")
 tree.add("rembo")
 tree.add("rails")
+tree.add("rail")
 tree.add("e")
 # pp tree.include? 'gia'
 # pp tree.include? 'dep'
@@ -41,6 +42,6 @@ tree.add("e")
 
 # puts "enter word for list:(press enter to get all list items)"
 # word = gets.chomp
-tree.delete("rails")
+tree.delete("")
 
 tree.list

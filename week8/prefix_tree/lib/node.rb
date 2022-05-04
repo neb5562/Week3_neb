@@ -1,4 +1,6 @@
 #!/usr/bin/env ruby
+# frozen_string_literal: true
+
 $LOAD_PATH << '../lib'
 
 class Node
@@ -13,47 +15,42 @@ class Node
     @count = 1
     @tree = []
   end
-  
+
   def add(word)
+    validate_word(word)
     have = have_in_childs(word)
-    return nil if word.length == 0
-      if have.empty?
-        no_child_found(word)
-      else
-        child_found(have, word)
-      end
+    return nil if word.length.zero?
+
+    if have.empty?
+      no_child_found(word)
+    else
+      child_found(have, word)
+    end
   end
-  
+
   def include?(word, is_word = false)
-    str = ""
+    str = ''
     obj = self
     last = false
 
     word.chars.each do |chr|
       return false if obj.nil?
-      obj = obj.roots.select{ |item| item.to_s == chr}.first
+
+      obj = obj.roots.select { |item| item.to_s == chr }.first
       str += obj.to_s
     end
     is_word ? (str == word && obj.is_end == true) : str == word
   end
 
-  def list(word = "")
+  def list(word = '')
     where = word.empty? ? self : have_in_childs(word)[0]
     recursive_list(where, word)
     pp @tree.sort_by { |s| s.scan(/\d+/).first.to_i }
-    
   end
 
-  #not working
+  
   def delete(word)
-    return "please enter word\n" if word.empty?
-    return "to delete word must exit in tree\n" unless find(word)
-    
-    obj = self
-    word.chars.each do |chr|
-      obj.roots.delete_if{ |item| item.to_s == chr && item.count == 1}
-    end
-
+    validate_before_delete(word) ? do_delete(word) : invalid_delete(word)
   end
 
   def find(string)
@@ -70,21 +67,46 @@ class Node
 
   private
 
-  def recursive_list(obj, prefix = "", str = "")
+  def validate_word(word)
+    !word.empty?
+  end
+
+  def invalid_delete(word)
+    puts "'#{word}' does not exist in tree"
+  end
+
+  def do_delete(word)
+    obj = self
+    last = word[-1]
+
+    word.chars.each do |chr|
+      break if obj.nil? 
+      
+      obj = obj.roots.select { |item| item.to_s == chr }.first
+      if obj.to_s == last || obj.count == 1
+        obj.is_end = false
+      end
+    end
+  end
+
+  def validate_before_delete(word)
+    !word.empty? || find(word)
+  end
+
+  def recursive_list(obj, prefix = '', str = '')
     return false if obj.nil?
-    
-    if prefix.length > 0 && include?(prefix)
+
+    if prefix.length.positive? && include?(prefix)
       obj = self
       prefix.chars.each do |chr|
-        obj = obj.roots.select{ |item| item.to_s == chr}.first
+        obj = obj.roots.select { |item| item.to_s == chr }.first
       end
-      recursive_list(obj, "", prefix[0..-2])
+      recursive_list(obj, '', prefix[0..-2])
 
       return false
     end
-    str += obj.to_s || ""
+    str += obj.to_s || ''
 
-    
     @tree << str if obj.is_end
     obj.roots.each do |child|
       recursive_list(child, prefix, str)
@@ -111,6 +133,6 @@ class Node
   end
 
   def have_in_childs(word)
-    @roots.select{ |item| item.to_s == downcase_char(word[0]) }
+    @roots.select { |item| item.to_s == downcase_char(word[0]) }
   end
 end
