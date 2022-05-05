@@ -36,9 +36,9 @@ tree.add("e")
 tree.add("ebay")
 
 # checking if include?
-puts
-puts "checking inclues"
-puts
+
+puts "\nchecking inclues\n"
+
 puts tree.include? 'gia'
 puts tree.include? 'dep'
 puts tree.include? 'he'
@@ -47,29 +47,29 @@ puts tree.include? 'giale'
 puts tree.include? 'neb'
 
 # checking if word
-puts
-puts "checking finds"
-puts
+
+puts "\nchecking finds\n"
+
 puts tree.find 'gialo'
 puts tree.find 'ab'
 puts tree.find 'gialoo'
 
 # delete
-puts
-puts "executing deletes"
-puts
+
+puts "\nexecuting deletes\n"
+
 tree.delete("loler")
 tree.delete("rail")
 tree.delete("e")
 
 # full list
-puts
-puts "full list"
-puts
+
+puts "\nfull list\n"
+
 tree.list("")
 
 # list words by prefix
-puts
-puts "by prefix"
-puts
+
+puts "\nby prefix\n"
+
 tree.list("gia")
