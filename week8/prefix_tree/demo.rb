@@ -3,7 +3,8 @@ $LOAD_PATH << './lib'
 
 
 require 'node'
-require 'csv' # in progress
+require 'csv'
+require 'csv_runner'
 require 'pp'
 
 tree = Node.new(true)
@@ -47,7 +48,6 @@ puts tree.include? 'giale'
 puts tree.include? 'neb'
 
 # checking if word
-
 puts "\nchecking finds\n"
 
 puts tree.find 'gialo'
@@ -55,21 +55,26 @@ puts tree.find 'ab'
 puts tree.find 'gialoo'
 
 # delete
-
 puts "\nexecuting deletes\n"
 
-tree.delete("loler")
-tree.delete("rail")
-tree.delete("e")
-tree.delete("dsf")
-# full list
+# tree.delete("loler")
+# tree.delete("rail")
+# tree.delete("e")
+# tree.delete("dsf")
 
+# full list
 puts "\nfull list\n"
 
-tree.list("")
+data = tree.list("")
 
 # list words by prefix
-
 puts "\nby prefix\n"
 
-tree.list("gia")
+data2 = tree.list("gia")
+
+CsvRunner.save_to_file(data2)
+
+obj = CsvRunner.load_from_file('data.csv')
+
+
+
