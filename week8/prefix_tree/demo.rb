@@ -3,7 +3,7 @@ $LOAD_PATH << './lib'
 
 
 require 'node'
-require 'csv'
+require 'csv' # in progress
 require 'pp'
 
 tree = Node.new(true)
@@ -34,22 +34,42 @@ tree.add("rrail")
 tree.add("riil")
 tree.add("e")
 tree.add("ebay")
-# pp tree.include? 'gia'
-# pp tree.include? 'dep'
-# pp tree.include? 'he'
-# pp tree.include? 'be'
-# pp tree.include? 'giale'
-# pp tree.include? 'neb'
 
-# pp tree.find 'gialo'
-# pp tree.find 'ab'
-# pp tree.find 'gialoo'
+# checking if include?
+puts
+puts "checking inclues"
+puts
+puts tree.include? 'gia'
+puts tree.include? 'dep'
+puts tree.include? 'he'
+puts tree.include? 'be'
+puts tree.include? 'giale'
+puts tree.include? 'neb'
 
-# make demo interactive. let user choose which function to call.
+# checking if word
+puts
+puts "checking finds"
+puts
+puts tree.find 'gialo'
+puts tree.find 'ab'
+puts tree.find 'gialoo'
 
-# puts "enter word for list:(press enter to get all list items)"
-# word = gets.chomp
+# delete
+puts
+puts "executing deletes"
+puts
 tree.delete("loler")
 tree.delete("rail")
 tree.delete("e")
+
+# full list
+puts
+puts "full list"
+puts
 tree.list("")
+
+# list words by prefix
+puts
+puts "by prefix"
+puts
+tree.list("gia")
