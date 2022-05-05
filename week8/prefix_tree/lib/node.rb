@@ -49,6 +49,7 @@ class Node
     where = word.empty? ? self : have_in_childs(word)[0]
     recursive_list(where, word)
     pp @tree.sort_by { |s| s.scan(/\d+/).first.to_i }
+    @tree = []
   end
 
   
