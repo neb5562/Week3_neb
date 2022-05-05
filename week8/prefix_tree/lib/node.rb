@@ -96,7 +96,7 @@ class Node
   end
 
   def validate_before_delete(word)
-    !word.empty? || find(word)
+    false if find(word) == false || word.empty?
   end
 
   def recursive_list(obj, prefix = '', str = '')

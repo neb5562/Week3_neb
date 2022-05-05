@@ -61,7 +61,7 @@ puts "\nexecuting deletes\n"
 tree.delete("loler")
 tree.delete("rail")
 tree.delete("e")
-
+tree.delete("dsf")
 # full list
 
 puts "\nfull list\n"
