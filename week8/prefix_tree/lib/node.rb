@@ -39,6 +39,7 @@ class Node
       obj = obj.roots.select { |item| item.to_s == chr }.first
       str += obj.to_s
     end
+
     is_word ? (str == word && obj.is_end == true) : str == word
   end
 
@@ -76,16 +77,21 @@ class Node
   end
 
   def do_delete(word)
-    obj = self
+    last_obj = self
     last = word[-1]
+    sum_of_childs = 0
 
     word.chars.each do |chr|
-      break if obj.nil? 
-      
-      obj = obj.roots.select { |item| item.to_s == chr }.first
-      if obj.to_s == last || obj.count == 1
-        obj.is_end = false
-      end
+      break if last_obj.nil? 
+
+      last_obj = last_obj.roots.select { |item| item.to_s == chr }.first
+      sum_of_childs += last_obj.count
+    end
+
+    if sum_of_childs == word.length
+      self.roots.delete_if{ |item| item.to_s == word[0] }
+    else
+      last_obj.is_end = false
     end
   end
 
@@ -106,8 +112,8 @@ class Node
       return false
     end
     str += obj.to_s || ''
-
     @tree << str if obj.is_end
+    
     obj.roots.each do |child|
       recursive_list(child, prefix, str)
     end

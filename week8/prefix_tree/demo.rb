@@ -17,7 +17,9 @@ tree.add("gialebo")
 tree.add("hello")
 tree.add("hell")
 tree.add("lol")
-
+tree.add("lool")
+tree.add("loler")
+tree.add("lob")
 tree.add("homeworker")
 tree.add("worker")
 tree.add("house")
@@ -26,7 +28,12 @@ tree.add("work")
 tree.add("rembo")
 tree.add("rails")
 tree.add("rail")
+tree.add("raill")
+tree.add("raib")
+tree.add("rrail")
+tree.add("riil")
 tree.add("e")
+tree.add("ebay")
 # pp tree.include? 'gia'
 # pp tree.include? 'dep'
 # pp tree.include? 'he'
@@ -42,6 +49,7 @@ tree.add("e")
 
 # puts "enter word for list:(press enter to get all list items)"
 # word = gets.chomp
-tree.delete("")
-
-tree.list
+tree.delete("loler")
+tree.delete("rail")
+tree.delete("e")
+tree.list("")
