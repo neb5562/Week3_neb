@@ -3,7 +3,7 @@
 
 $LOAD_PATH << '../lib'
 
-class Node
+class Ptree
   attr_accessor :char, :is_end, :roots, :is_root
   attr_reader :count
 
@@ -129,7 +129,7 @@ class Node
   end
 
   def no_child_found(word)
-    obj = Node.new
+    obj = Ptree.new
     obj.is_end = true if word.length == 1
     obj.char = downcase_char(word[0])
     obj.add(word.to_s[1..-1])

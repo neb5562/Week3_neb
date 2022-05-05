@@ -2,12 +2,12 @@
 $LOAD_PATH << './lib'
 
 
-require 'node'
+require 'ptree'
 require 'csv'
 require 'csv_runner'
 require 'pp'
 
-tree = Node.new(true)
+tree = Ptree.new(true)
 
 tree.add("depeche")
 tree.add("dep")
@@ -74,7 +74,7 @@ data2 = tree.list("gia")
 
 CsvRunner.save_to_file(data2)
 
-obj = CsvRunner.load_from_file('data.csv')
+# obj = CsvRunner.load_from_file('data.csv')
 
 
 
