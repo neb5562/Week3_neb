@@ -7,6 +7,8 @@ class Node
   attr_accessor :char, :is_end, :roots, :is_root
   attr_reader :count
 
+  INVALID_WORD_MSG = "%s does not exist in tree".freeze
+
   def initialize(root = false)
     @char = nil
     @is_end = false
@@ -73,7 +75,7 @@ class Node
   end
 
   def invalid_delete(word)
-    puts "'#{word}' does not exist in tree"
+    puts sprintf(INVALID_WORD_MSG, word)
   end
 
   def do_delete(word)
