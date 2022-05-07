@@ -1,6 +1,6 @@
 Gem::Specification.new do |s|
   s.name        = 'ptree'
-  s.version     = '0.0.0'
+  s.version     = '0.0.1'
   s.summary     = "Prefix Tree!"
   s.description = "A simple Prefix Tree"
   s.authors     = ["Gia Nebieridze"]

@@ -7,27 +7,27 @@ class Ptree
   attr_accessor :char, :is_end, :roots, :is_root
   attr_reader :count
 
-  INVALID_WORD_MSG = "%s does not exist in tree".freeze
+  INVALID_WORD_MSG = "\e[31m%s does not exist in tree\e[0m".freeze
 
   def initialize(root = false)
-    @char = nil
-    @is_end = false
-    @roots = []
+    @char    = nil
+    @is_end  = false
+    @roots   = []
     @is_root = root
-    @count = 1
-    @tree = []
+    @count   = 1
+    @tree    = []
   end
 
   def add(word)
-    validate_word(word)
-    have = have_in_childs(word)
-    return nil if word.length.zero?
+    return false unless validate_word(word)
 
+    have = have_in_childs(word)
     if have.empty?
       no_child_found(word)
     else
       child_found(have, word)
     end
+    true
   end
 
   def include?(word, is_word = false)
@@ -41,7 +41,6 @@ class Ptree
       obj = obj.roots.select { |item| item.to_s == chr }.first
       str += obj.to_s
     end
-
     is_word ? (str == word && obj.is_end == true) : str == word
   end
 
@@ -54,7 +53,6 @@ class Ptree
     tree.sort_by { |s| s.scan(/\d+/).first.to_i }
   end
 
-  
   def delete(word)
     validate_before_delete(word) ? do_delete(word) : invalid_delete(word)
   end
@@ -74,7 +72,7 @@ class Ptree
   private
 
   def validate_word(word)
-    !word.empty?
+    !word.empty? 
   end
 
   def invalid_delete(word)
@@ -98,6 +96,7 @@ class Ptree
     else
       last_obj.is_end = false
     end
+    true
   end
 
   def validate_before_delete(word)

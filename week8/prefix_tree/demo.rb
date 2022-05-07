@@ -37,7 +37,6 @@ tree.add("e")
 tree.add("ebay")
 
 # checking if include?
-
 puts "\nchecking inclues\n"
 
 puts tree.include? 'gia'
@@ -46,6 +45,7 @@ puts tree.include? 'he'
 puts tree.include? 'be'
 puts tree.include? 'giale'
 puts tree.include? 'neb'
+puts tree.include? 'ler'
 
 # checking if word
 puts "\nchecking finds\n"
@@ -57,22 +57,22 @@ puts tree.find 'gialoo'
 # delete
 puts "\nexecuting deletes\n"
 
-# tree.delete("loler")
-# tree.delete("rail")
-# tree.delete("e")
-# tree.delete("dsf")
+tree.delete("loler")
+tree.delete("rail")
+tree.delete("e")
+tree.delete("dsf")
 
 # full list
 puts "\nfull list\n"
 
 data = tree.list("")
-
+puts data
 # list words by prefix
-puts "\nby prefix\n"
+# puts "\nby prefix\n"
 
-data2 = tree.list("gia")
+# data2 = tree.list("gia")
 
-CsvRunner.save_to_file(data2)
+# CsvRunner.save_to_file(data2)
 
 # obj = CsvRunner.load_from_file('data.csv')
 
