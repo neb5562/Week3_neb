@@ -3,7 +3,7 @@
 
 $LOAD_PATH << '../lib'
 
-class Ptree
+class Node
   attr_accessor :char, :is_end, :roots, :is_root
   attr_reader :count
 
@@ -33,7 +33,6 @@ class Ptree
   def include?(word, is_word = false)
     str = ''
     obj = self
-    last = false
 
     word.chars.each do |chr|
       return false if obj.nil?
@@ -84,6 +83,21 @@ class Ptree
     last = word[-1]
     sum_of_childs = 0
 
+    last_obj, sum_of_childs = loop_chars(last_obj, word)
+
+    if sum_of_childs == word.length
+      self.roots.delete_if{ |item| item.to_s == word[0] }
+    else
+      last_obj.is_end = false
+    end
+
+    true
+  end
+
+  def loop_chars(obj, word)
+    last_obj = obj
+    sum_of_childs = 0
+
     word.chars.each do |chr|
       break if last_obj.nil? 
 
@@ -91,12 +105,7 @@ class Ptree
       sum_of_childs += last_obj.count
     end
 
-    if sum_of_childs == word.length
-      self.roots.delete_if{ |item| item.to_s == word[0] }
-    else
-      last_obj.is_end = false
-    end
-    true
+    [last_obj, sum_of_childs]
   end
 
   def validate_before_delete(word)
@@ -115,6 +124,7 @@ class Ptree
 
       return false
     end
+    
     str += obj.to_s || ''
     @tree << str if obj.is_end
     
@@ -128,7 +138,7 @@ class Ptree
   end
 
   def no_child_found(word)
-    obj = Ptree.new
+    obj = Node.new
     obj.is_end = true if word.length == 1
     obj.char = downcase_char(word[0])
     obj.add(word.to_s[1..-1])

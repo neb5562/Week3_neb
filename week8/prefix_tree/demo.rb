@@ -2,12 +2,12 @@
 $LOAD_PATH << './lib'
 
 
-require 'ptree'
+require 'node'
 require 'csv'
 require 'csv_runner'
 require 'pp'
 
-tree = Ptree.new(true)
+tree = Node.new(true)
 
 tree.add("depeche")
 tree.add("dep")
