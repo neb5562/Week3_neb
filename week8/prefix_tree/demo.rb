@@ -65,16 +65,18 @@ tree.delete("dsf")
 # full list
 puts "\nfull list\n"
 
-data = tree.list("")
-puts data
+# data = tree.list("")
+# puts data
 # list words by prefix
 # puts "\nby prefix\n"
 
-# data2 = tree.list("gia")
+data2 = tree.list()
 
-# CsvRunner.save_to_file(data2)
+puts data2
 
-# obj = CsvRunner.load_from_file('data.csv')
+CsvRunner.save_to_file(data2)
 
+# obj = CsvRunner.load_from_file('60_data.csv')
 
+# puts obj.list
 
