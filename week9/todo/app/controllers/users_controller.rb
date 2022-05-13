@@ -1,11 +1,15 @@
-class UsersController < ApplicationController
+class UsersController < Sinatra::Base
 
-  get '/' do
+  configure do
+    set :views, 'app/views/users'
+  end
+
+  get '/user' do
     erb :index
   end
 
   get '/login' do
-  erb :login
+    erb :login
   end
 
   post '/login' do
@@ -21,10 +25,6 @@ class UsersController < ApplicationController
     email = params['email']
     password = params['password']
     full_name = params['full_name']
-  end
-
-  get '/user' do
-    "user index page"
   end
 
 end

@@ -1,6 +1,5 @@
 source "https://rubygems.org"
 gem "sinatra"
-gem 'shotgun'
 gem "puma"
 gem "thin"
 gem "falcon"
@@ -8,5 +7,4 @@ gem "webrick"
 gem "pg"
 gem "rake" 
 gem "sinatra-activerecord" 
-gem "sequel"
 gem 'require_all'

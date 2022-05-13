@@ -1,15 +1,13 @@
-development:
+default: &default
   adapter: postgresql
-  encoding: unicode
-  database: todo
+  encoding: utf8
   pool: 2
+  database: todo
   username: postgres
   password: 192837465
-production:
-  adapter: postgresql
-  encoding: unicode
-  pool: 5
-  host: <%= ENV['DATABASE_HOST'] %>
-  database: <%= ENV['DATABASE_NAME'] %>
-  username: <%= ENV['DATABASE_USER'] %>
-  password: <%= ENV['DATABASE_PASSWORD'] %>
+  host: localhost
+  port: 5432
+
+development:
+  <<: *default
+  database: todo
