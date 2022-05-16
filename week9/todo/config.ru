@@ -16,3 +16,4 @@ end
 
 run ApplicationController
 use UsersController
+use AuthController

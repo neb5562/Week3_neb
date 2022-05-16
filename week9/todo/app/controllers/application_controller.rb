@@ -10,7 +10,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    # Users.select('id', 'name').all
+    # session['user_id'] = 10
     erb :index
   end
 end

@@ -1,3 +1,3 @@
-class User
-  attr_reader :full_name, :email, :password
+class User < ActiveRecord::Base
+  attr_reader :id, :full_name, :email, :password
 end
