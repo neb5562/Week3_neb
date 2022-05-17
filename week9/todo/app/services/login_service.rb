@@ -15,7 +15,7 @@ class LoginService
 
   def login_user 
     result = User::find_by(email: @params['email'])
-
+    return nil unless result
     if BCrypt::Password.new(result['password']) == @params['password']
       @user = result
     end

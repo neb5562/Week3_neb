@@ -1,4 +1,4 @@
-class AuthController < Sinatra::Base
+class AuthController < ApplicationController
 
   include BCrypt
 

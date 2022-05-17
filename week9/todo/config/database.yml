@@ -1,7 +1,8 @@
 default: &default
   adapter: postgresql
   encoding: utf8
-  pool: 2
+  pool: 40
+  timeout: 5000
   database: todo
   username: postgres
   password: 192837465

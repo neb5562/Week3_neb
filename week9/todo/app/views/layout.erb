@@ -5,6 +5,9 @@
         <title>My Page Title</title>
         <meta name="description" content="My Page Description" />
         <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/flatpickr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/flatpickr/4.6.9/themes/airbnb.min.css">
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js" defer></script>
         <link href="<%= url('css/style.css') %>" rel="stylesheet" type="text/css" />
     </head>
     <body>
@@ -16,7 +19,7 @@
                 <div class="flex md:order-2">
                 
                 <% if logged_in? %>
-                <a type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" href="<%=url('/new')%>">Add new</a>
+                <a type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" href="<%=url('/list/new')%>">Add new</a>
                    <% end %>
                     <button
                         data-collapse-toggle="mobile-menu-4"
@@ -46,7 +49,7 @@
                         </li>
                         <% if logged_in? %>
                         <li>
-                          <a href="<%=url('/user')%>" class="float-right block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"><%=sprintf("Hello, #{current_user['full_name'].capitalize}")%></a>
+                          <a href="<%=url('/user/index')%>" class="float-right block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"><%=sprintf("Hello, #{current_user['full_name'].capitalize}")%></a>
                         </li>
                          <li>
                           <a href="<%=url('/auth/log_out')%>" class="float-right block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Log Out</a>
