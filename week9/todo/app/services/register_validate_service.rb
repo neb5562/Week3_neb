@@ -19,6 +19,7 @@ class RegisterValidateService
     @validation_errors.push("full name is required") unless  ValidationRules.min_length(@params['full_name'], 2)
     @validation_errors.push("passwords didn't match") unless  ValidationRules.matches(@params['password'], @params['password_confirm'])
     @validation_errors.push("email arleady taken") if User::where(email: @params['email']).take
+    @validation_errors.push("you had account and it is deactivated") if DeactivatedUser::where(email: @params['email']).take
   end
 
 

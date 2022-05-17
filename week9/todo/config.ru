@@ -15,6 +15,7 @@ else
 end
 
 run ApplicationController
+use Rack::MethodOverride
 use UsersController
 use AuthController
 use ListController

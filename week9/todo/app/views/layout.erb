@@ -46,7 +46,7 @@
                         </li>
                         <% if logged_in? %>
                         <li>
-                          <a href="<%=url('/user/index')%>" class="float-right block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"><%=sprintf("Hello, #{current_user['full_name'].capitalize}")%></a>
+                          <a href="<%=url('/profile')%>" class="float-right block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"><%=sprintf("Hello, #{current_user['full_name'].capitalize}")%></a>
                         </li>
                          <li>
                           <a href="<%=url('/auth/log_out')%>" class="float-right block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 md:dark:hover:text-white dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700">Log Out</a>
@@ -61,14 +61,6 @@
                 </div>
             </div>
         </nav>
-<% unless flash[:error_messages].nil? %>
-<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-  <% flash[:error_messages].each do |error| %>
-    <p class="font-medium"><%=error%></p> 
-  <% end %>
-</div>
-<% end %>
-
 <% unless flash[:success_message].nil? %>
 <div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
   <p class="font-medium"><%=flash[:success_message]%></p> 

@@ -1,4 +1,5 @@
 require "./config/environment"
+require 'date'
 
 class ApplicationController < Sinatra::Base
 
@@ -11,7 +12,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    @list ||= logged_in? ? current_user.todos.all() : nil
+    @list ||= logged_in? ? current_user.todos.all().order(Arel.sql("(deadline - now()) asc")) : nil
     erb :'list/index'
   end
 end
