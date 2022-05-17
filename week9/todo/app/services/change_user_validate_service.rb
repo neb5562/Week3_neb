@@ -15,6 +15,8 @@ class ChangeUserValidateService
 
   def validate_change_user_input
     @validation_errors.push("password is required") unless  ValidationRules.min_length(@params['password'], 1)
+    @validation_errors.push("Name is required") unless  ValidationRules.min_length(@params['full_name'], 1)
+    @validation_errors.push("not valid email") unless ValidationRules.email(@params['email'])
     unless @params['new_password'].empty?
       @validation_errors.push("new password is required") unless  ValidationRules.min_length(@params['new_password'], 1)
       @validation_errors.push("new password confir is required") unless  ValidationRules.min_length(@params['new_password_confirm'], 1)

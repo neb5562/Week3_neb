@@ -6,13 +6,6 @@ class UsersController < ApplicationController
     end
   end
 
-  configure do
-    set :views, 'app/views'
-    enable :sessions
-    set :session_secret, "todo"
-    register Sinatra::Flash
-  end
-
   get '/profile' do
     erb :'users/index'
   end

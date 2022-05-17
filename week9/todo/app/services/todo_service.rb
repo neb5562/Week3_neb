@@ -1,4 +1,4 @@
-class ListService
+class TodoService
 
   def initialize(params, id)
     @params = params
