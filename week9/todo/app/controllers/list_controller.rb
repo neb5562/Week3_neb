@@ -7,10 +7,6 @@ class ListController < ApplicationController
     register Sinatra::Flash
   end
 
-  get '/list' do
-    erb :'list/index'
-  end
-
   get '/list/new' do
     erb :'list/new'
   end
@@ -22,9 +18,9 @@ class ListController < ApplicationController
       flash[:error_messages] = result
       redirect('/list/new')
     else
-      ListService.new(params).call 
+      ListService.new(params, current_user['id']).call 
       flash[:success_message] = 'To Do added successfully'
-      redirect('/list/new')
+      redirect('/')
     end
   end
 

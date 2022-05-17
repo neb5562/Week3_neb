@@ -1,17 +1,5 @@
 <div class="m-auto mt-6 p-6 rounded-lg shadow-lg bg-white max-w-sm">
- <% unless flash[:error_messages].nil? %>
-<div class="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">
-  <% flash[:error_messages].each do |error| %>
-    <p class="font-medium"><%=error%></p> 
-  <% end %>
-</div>
-<%end %>
 
-<% unless flash[:success_message].nil? %>
-<div class="p-4 mb-4 text-sm text-green-700 bg-green-100 rounded-lg dark:bg-green-200 dark:text-green-800" role="alert">
-  <p class="font-medium"><%=flash[:success_message]%></p> 
-</div>
-<%end %>
   <form method = "post" action = "/auth/login">
     <div class="form-group mb-6">
       <label for="exampleInputEmail1" class="form-label inline-block mb-2 text-gray-700">Email address</label>

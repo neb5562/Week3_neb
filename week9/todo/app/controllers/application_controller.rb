@@ -11,7 +11,7 @@ class ApplicationController < Sinatra::Base
   end
 
   get "/" do
-    # session['user_id'] = 10
-    erb :index
+    @list ||= logged_in? ? current_user.todos.all() : nil
+    erb :'list/index'
   end
 end
